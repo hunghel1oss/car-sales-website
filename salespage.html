@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./file scc/salespage.css">
+</head>
+<body>
+    <div class="salespage">
+        <h1> Đăng tin bán xe</h1>
+        <form id="carForm">
+            <div class="form-group"> 
+                <label for="brand">Hãng xe:</label>
+                <input type="text" id="brand" name="brand" required>
+            </div>
+            <div class="form-group">
+                <label for="model">Mẫu xe:</label>
+                <input type="text" id="model" name="model" required>
+            </div>
+            <div class="form-group">
+                <label for="year">Năm sản xuất:</label>
+                <input type="number" id="year" name="year" required>
+            </div>
+            <div class="form-group">
+                <label for="seats">Số chỗ ngồi:</label>
+                <input type="number" id="seats" name="seats" min="1" required>
+            </div>
+            <div class="form-group">
+                <label for="color">Màu xe:</label>
+                <input type="text" id="color" name="color" required>
+            </div>
+            <div class="form-group">
+                <label for="mileage">Đã chạy (km):</label>
+                <input type="number" id="mileage" name="mileage" required>
+            </div>
+            <div class="form-group">
+                <label for="price">Giá bán (VNĐ):</label>
+                <input type="number" id="price" name="price" required>
+            </div>
+            <div class="form-group">
+                <label for="imageUpload">Hình ảnh:</label>
+                <input type="file" id="imageUpload" name="imageUpload" accept="image/*" required>
+                <img id="imagePreview" src="#" alt="Xem trước ảnh" style="display: none; max-width: 100%; height: auto; margin-top: 10px;">
+            </div>
+            <div class="form-group">
+                <label for="condition">Tình trạng xe:</label>
+                <select id="condition" name="condition" required>
+                    <option value="">-- Chọn tình trạng --</option>
+                    <option value="new">Xe mới</option>
+                    <option value="used">Xe cũ</option>
+                </select>
+            </div>
+            <div id="usedCarDetails" style="display: none;">
+                <div class="form-group">
+                    <label for="registrationPaper">Giấy tờ đăng ký xe:</label>
+                    <select id="registrationPaper" name="registrationPaper">
+                        <option value="">-- Chọn tình trạng --</option>
+                        <option value="yes">Đầy đủ, hợp lệ</option>
+                        <option value="no">Không đầy đủ/hết hạn</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="inspectionExpiry">Thời hạn đăng kiểm:</label>
+                    <input type="date" id="inspectionExpiry" name="inspectionExpiry">
+                </div>
+                <div class="form-group">
+                    <label for="insuranceExpiry">Bảo hiểm xe:</label>
+                    <input type="date" id="insuranceExpiry" name="insuranceExpiry">
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="accident">Tình trạng tai nạn:</label>
+                <select id="accident" name="accident" required>
+                    <option value="">-- Chọn tình trạng --</option>
+                    <option value="no">Chưa từng bị tai nạn</option>
+                    <option value="yes">Đã từng bị tai nạn (mô tả chi tiết nếu có)</option>
+                </select>
+                <textarea id="accidentDetails" name="accidentDetails" placeholder="Mô tả chi tiết về tai nạn (nếu có)" style="width: calc(100% - 12px); padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; margin-top: 5px; display: none;"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="paymentMethods">Hình thức thanh toán:</label>
+                <select id="paymentMethods" name="paymentMethods" multiple required>
+                    <option value="cash">Tiền mặt</option>
+                    <option value="transfer">Chuyển khoản</option>
+                </select>
+                <small>Chọn một hoặc nhiều hình thức thanh toán.</small>
+            </div>
+            <div class="form-group">
+                <label for="deliveryTime">Thời gian giao xe dự kiến:</label>
+                <input type="text" id="deliveryTime" name="deliveryTime">
+            </div>
+            <div class="form-group">
+                <label for="viewingLocation">Địa điểm xem xe:</label>
+                <input type="text" id="viewingLocation" name="viewingLocation" required>
+            </div>
+            
+            <h2>Thông Tin Người Bán</h2>
+            <div class="form-group">
+                <label for="sellerName">Họ và tên (Cá nhân/Đại lý):</label>
+                <input type="text" id="sellerName" name="sellerName" required>
+            </div>
+            <div class="form-group">
+                <label for="sellerPhone">Số điện thoại:</label>
+                <input type="tel" id="sellerPhone" name="sellerPhone" required>
+            </div>
+            <div class="form-group">
+                <label for="sellerAddress">Địa chỉ liên hệ (Nơi sống):</label>
+                <input type="text" id="sellerAddress" name="sellerAddress" required>
+            </div>
+            <div class="form-group">
+                <label for="sellerEmail">Địa chỉ email:</label>
+                <input type="email" id="sellerEmail" name="sellerEmail" required>
+            </div>
+            
+            <button type="submit">Đăng Tin</button>
+        </form>
+    </div>
+
+    <script src="./file js/cardsalespage.js"></script>
+</body>
+</html>

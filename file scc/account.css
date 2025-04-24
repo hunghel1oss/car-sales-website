@@ -1,0 +1,37 @@
+*{
+    border: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.account{
+    box-shadow: 0 2px 4px rgba(46, 45, 45, 0.5);
+    width: 300px;
+    height: 100%;
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.account .login-or-register .dn-dk{
+    font-size: x-large;
+    text-decoration: none;
+    font-style: oblique;
+}
+.account .ND-account{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.account .ND-account .Tk{
+    text-decoration: none;
+}
+.account .ND-account .ta{
+    display: flex;
+    padding: 10px;
+    gap: 10px;
+    box-shadow: 0 2px 4px rgba(46, 45, 45, 0.5);
+}
+.account .ND-account .ta .img-ta{
+    width: 20px;
+    height: 20px;
+}

@@ -1,0 +1,92 @@
+*{
+    border: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.current3{
+    display: flex;
+    justify-content: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+/* .current3 .directory{
+    display: flex;
+    flex-direction: column;
+} */
+.current3 .directory .directory3{
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 200px;
+    text-decoration: none;
+}
+.current3 .directory .img-t3{
+    width: 20px;
+    height: 20px;
+}
+.current3 .account3 .account-3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    width: 200px;
+    text-decoration: none;
+}
+.current3 .account3 .img-t3{
+    width: 20px;
+    height: 20px;
+}
+.current3 .search3 .img-t3{
+    width: 20px;
+    height: 20px;
+}
+.current3 .search3{
+    display: flex; 
+    align-items: center; 
+    border: 1px solid #ccc; 
+    border-radius: 5px;
+    padding: 5px;
+    width: 100%;
+}
+.current3 .search3 .search3input{
+    border: none; 
+    padding: 8px; 
+    flex-grow: 1; 
+    outline: none;
+}
+.current3 .utilities3 .img-t3{
+    width: 20px;
+    height: 20px;
+}
+.current3 .utilities3{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+/* sổ xuống */
+
+.current3 .directory{
+    position: relative;
+}
+#categoryDropdowndirectory {
+    display: none; 
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    z-index: 10; 
+}
+
+.current3 .account3{
+    position: relative;
+}
+#accountDropdownContainer{
+    display: none; 
+    position: absolute;
+    top: 100%; 
+    left: 0;
+    z-index: 10; 
+}

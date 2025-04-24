@@ -1,0 +1,50 @@
+*{
+    border: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.Danh-muc{
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+    height: 100%;
+    gap: 2px;
+    box-shadow: 0 2px 4px rgba(46, 45, 45, 0.5);
+}
+.Danh-muc .Noi-dung-danh-muc{
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    text-align: left;
+    padding: 0;
+    margin: 0;
+}
+.Danh-muc .Noi-dung-danh-muc .noi-dung-dm{
+    display: flex;
+    text-align: left;
+    gap: 10px;
+    padding: 10px;
+    margin: 0px;
+    box-shadow: 0 2px 4px rgba(46, 45, 45, 0.5);
+    text-decoration: none;
+}
+.Danh-muc .Noi-dung-danh-muc .noi-dung-dm .img-dm{
+    width: 20px;
+    height: 20px;
+}
+.Danh-muc .Noi-dung-danh-muc .noi-dung-dm .catalogContent-4seats{
+    text-decoration: none;
+}
+.Danh-muc .Noi-dung-danh-muc .noi-dung-dm .catalogContent-7seats{
+    text-decoration: none;
+}
+.Danh-muc .Noi-dung-danh-muc .noi-dung-dm .catalogContent-pickupTruck{
+    text-decoration: none;
+}
+.Danh-muc .Noi-dung-danh-muc .noi-dung-dm .catalogContent-Truck{
+    text-decoration: none;
+}
+.Danh-muc .Noi-dung-danh-muc .noi-dung-dm .catalogContent-tramCar{
+    text-decoration: none;
+}
