@@ -1,6 +1,10 @@
-/* ... Các style CSS hiện có ... */
-
+*{
+    font-family: sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+}
 .car-card {
+    display: block;
     border: 1px solid #ddd;
     padding: 15px;
     border-radius: 8px;
@@ -8,39 +12,29 @@
     text-align: center;
     cursor: pointer;
     transition: box-shadow 0.3s ease;
-}
-
-.car-card:hover {
+    text-decoration: none; 
+    color: inherit;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.car-card img {
-    max-width: 100%;
+    width: 300px;
     height: auto;
+    display: flex;
+    flex-direction: column;
+}
+.img-car-card {
+    max-width: 100%;
+    height: 300px;
     border-radius: 4px;
     margin-bottom: 10px;
 }
-
 .car-card h3 {
     margin-top: 0;
     color: #333;
     margin-bottom: 5px;
+    font-size: 1.2em;
 }
-
 .car-card .main-info p {
     margin-bottom: 5px;
     color: #666;
-}
-
-.car-details {
-    text-align: left;
-    margin-top: 10px;
-    border-top: 1px solid #eee;
-    padding-top: 10px;
-    display: none; /* Ẩn thông tin chi tiết ban đầu */
-}
-
-.car-details p {
-    margin-bottom: 5px;
-    color: #555;
+    font-size: 0.9em;
+    margin-bottom: 0;
 }

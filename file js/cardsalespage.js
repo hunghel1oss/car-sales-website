@@ -1,87 +1,58 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const carListDiv = document.getElementById('carList');
-    const carsKey = 'cars';
+    const carListContainer = document.querySelector('.car-list-container');
+    const storedCars = localStorage.getItem('carAds');
+    let carAdsArray = storedCars ? JSON.parse(storedCars) : [];
 
-    // Hàm lấy nội dung HTML từ file bên ngoài
-    async function fetchHTML(url) {
-        const response = await fetch(url);
-        return await response.text();
-    }
+    carAdsArray.sort((a, b) => b.ID - a.ID);
 
-    // Hàm hiển thị danh sách xe từ Local Storage dưới dạng card
-    async function displayCars() {
-        carListDiv.innerHTML = '';
+    const urlParams = new URLSearchParams(window.location.search);
+    const newCarId = urlParams.get('newCarId');
 
-        const storedCars = localStorage.getItem(carsKey);
-
-        if (storedCars) {
-            const cars = JSON.parse(storedCars);
-            const carCardTemplate = await fetchHTML('car-card.html');
-            const carDetailsTemplate = await fetchHTML('car-details.html');
-
-            cars.forEach(function(car, index) {
-                // Tạo HTML cho card nhỏ bằng template
-                let cardHTML = carCardTemplate;
-                cardHTML = cardHTML.replace('{{index}}', index);
-                cardHTML = cardHTML.replace('{{image}}', car.image);
-                cardHTML = cardHTML.replace('{{brand}}', car.brand);
-                cardHTML = cardHTML.replace('{{model}}', car.model);
-                cardHTML = cardHTML.replace('{{year}}', car.year);
-                cardHTML = cardHTML.replace('{{price}}', parseInt(car.price).toLocaleString('vi-VN'));
-                cardHTML = cardHTML.replace('{{mileage}}', parseInt(car.mileage).toLocaleString('vi-VN'));
-
+    if (carAdsArray && carAdsArray.length > 0) {
+        carAdsArray.forEach(car => {
+   
+            if (car.brand && car.model) {
                 const carCard = document.createElement('div');
-                carCard.innerHTML = cardHTML;
-                carListDiv.appendChild(carCard);
+                carCard.classList.add('car-card');
+                carCard.dataset.id = car.ID;
 
-                // Thêm sự kiện click để hiển thị chi tiết
-                carCard.addEventListener('click', async function() {
-                    const detailsDiv = this.querySelector('.car-details');
-                    if (!detailsDiv) {
-                        let detailsHTML = carDetailsTemplate;
-                        detailsHTML = detailsHTML.replace('{{seats}}', car.seats);
-                        detailsHTML = detailsHTML.replace('{{color}}', car.color);
-                        detailsHTML = detailsHTML.replace('{{condition}}', car.condition === 'used' ? 'Xe cũ' : 'Xe mới');
-                        detailsHTML = detailsHTML.replace('{{accident}}', car.accident === 'yes' ? `Đã từng (${car.accidentDetails || 'không có mô tả'})` : 'Chưa từng');
-                        detailsHTML = detailsHTML.replace('{{paymentMethods}}', Array.isArray(car.paymentMethods) ? car.paymentMethods.join(', ') : car.paymentMethods);
-                        detailsHTML = detailsHTML.replace('{{deliveryTime}}', car.deliveryTime || 'không xác định');
-                        detailsHTML = detailsHTML.replace('{{viewingLocation}}', car.viewingLocation);
-                        detailsHTML = detailsHTML.replace('{{sellerName}}', car.sellerName);
-                        detailsHTML = detailsHTML.replace('{{sellerType}}', car.sellerType || 'cá nhân');
-                        detailsHTML = detailsHTML.replace('{{sellerPhone}}', car.sellerPhone);
-                        detailsHTML = detailsHTML.replace('{{sellerAddress}}', car.sellerAddress);
-                        detailsHTML = detailsHTML.replace('{{sellerEmail}}', car.sellerEmail);
+                if (newCarId && car.ID.toString() === newCarId) {
+                    carCard.classList.add('new-car-highlight');
+                }
 
-                        if (car.condition === 'used') {
-                            detailsHTML = detailsHTML.replace('{{#if isUsed}}', '');
-                            detailsHTML = detailsHTML.replace('{{/if}}', '');
-                            detailsHTML = detailsHTML.replace('{{registrationPaper}}', car.registrationPaper);
-                            detailsHTML = detailsHTML.replace('{{inspectionExpiry}}', car.inspectionExpiry || 'không rõ');
-                            detailsHTML = detailsHTML.replace('{{insuranceExpiry}}', car.insuranceExpiry || 'không rõ');
-                        } else {
-                            // Xóa phần thông tin xe cũ nếu không phải xe cũ
-                            const usedCarInfoRegex = /{{#if isUsed}}[\s\S]*?{{\/if}}/g;
-                            detailsHTML = detailsHTML.replace(usedCarInfoRegex, '');
-                        }
+                const img = document.createElement('img');
+                img.src = car.imagesBase64 && car.imagesBase64[0] ? car.imagesBase64[0] : './images/default-car.png';
+                img.alt = `${car.brand} ${car.model}`;
+                img.classList.add('img-car-card');
 
-                        const detailsContainer = document.createElement('div');
-                        detailsContainer.classList.add('car-details');
-                        detailsContainer.innerHTML = detailsHTML;
-                        this.appendChild(detailsContainer);
-                        detailsContainer.style.display = 'block';
-                    } else {
-                        detailsDiv.style.display = detailsDiv.style.display === 'block' ? 'none' : 'block';
-                    }
+                const brandModel = document.createElement('h3');
+                brandModel.textContent = `${car.brand} ${car.model} (${car.year || 'Không rõ năm'})`;
+
+                const mainInfo = document.createElement('div');
+                mainInfo.classList.add('main-info');
+
+                const price = document.createElement('p');
+                price.textContent = `Giá: ${car.price ? car.price.toLocaleString('vi-VN') : 'Liên hệ'} VNĐ`;
+
+                const mileage = document.createElement('p');
+                mileage.textContent = `Đã chạy: ${car.mileage ? car.mileage.toLocaleString('vi-VN') : 'Không rõ'} km`;
+
+                mainInfo.appendChild(price);
+                mainInfo.appendChild(mileage);
+
+                carCard.appendChild(img);
+                carCard.appendChild(brandModel);
+                carCard.appendChild(mainInfo);
+                carListContainer.appendChild(carCard);
+
+                carCard.addEventListener('click', function() {
+                    const selectedCarId = this.dataset.id;
+                    localStorage.setItem('selectedCarId', selectedCarId);
+                    window.location.href = './car-details.html';
                 });
-            });
-
-        } else {
-            carListDiv.innerHTML = '<p>Chưa có xe nào được đăng.</p>';
-        }
+            }
+        });
+    } else {
+        carListContainer.innerHTML = '<p>Chưa có tin đăng xe nào.</p>';
     }
-
-    // ... (Các phần xử lý sự kiện form submit và các dropdown khác giữ nguyên) ...
-
-    // Gọi hàm hiển thị danh sách xe khi trang được tải
-    displayCars();
 });

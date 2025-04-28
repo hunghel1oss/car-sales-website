@@ -1,0 +1,41 @@
+body {
+    font-family: sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+}
+
+.card-details-container {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card-details-container h1, h2 {
+    text-align: center;
+    color: #333;
+}
+.card-details-container .detail-group {
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.car-detail-item:last-child {
+    border-bottom: none;
+}
+
+.car-detail-item strong {
+    font-weight: bold;
+    color: #555;
+    margin-right: 5px;
+}
+
+.car-detail-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 15px;
+}

@@ -1,0 +1,63 @@
+*{
+    font-family: sans-serif;
+    margin: 20px;
+    background-color: #f4f4f4;
+}
+.salespage {
+    max-width: 800px;
+    margin: 0 auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.salespage h1{
+    text-align: center;
+    color: #333;
+}
+.salespage .carForm {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+}
+.salespage .carForm .form-group {
+    margin-bottom: 15px;
+    padding: 10px;
+}
+.salespage .carForm .form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+}
+.input-text-fg {
+        width: calc(100% - 12px);
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+}
+.input-number-fg {
+    width: calc(100% - 12px);
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+.form-group-thanhtoan{
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+.submit-button {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
