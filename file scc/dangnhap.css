@@ -1,0 +1,141 @@
+/* === Basic Reset & Body Styling === */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(#355c7d, #6c5b7b, #c06c84);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 15px;
+}
+
+/* === Login Container Styling (Khung trắng) === */
+.login-container {
+    background-color: white;
+    color: #333;
+    border-radius: 15px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+    padding: 30px 40px;
+    width: 100%;
+    max-width: 450px;
+}
+
+/* === Title Styling ("Đăng nhập") === */
+.login-container h2 {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #333;
+    font-size: 1.8em;
+    font-weight: 600;
+}
+
+/* === Form Group Styling === */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* === Label Styling === */
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: #555;
+    font-size: 0.9em;
+}
+
+/* === Input Styling === */
+.form-group input[type="text"],
+.form-group input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    color: #333;
+}
+
+.form-group input::placeholder {
+    color: #aaa;
+}
+
+/* === Form Options Styling (Remember Me & Forgot Password) === */
+.form-options {
+    display: flex;
+    justify-content: space-between; /* Đẩy 2 phần tử ra 2 bên */
+    align-items: center;         /* Căn giữa theo chiều dọc */
+    margin-bottom: 25px;        /* Khoảng cách trước nút Đăng nhập */
+    font-size: 0.9em;           /* Chữ nhỏ hơn một chút */
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+}
+
+.remember-me input[type="checkbox"] {
+    margin-right: 5px; /* Khoảng cách giữa checkbox và label */
+    cursor: pointer;
+}
+
+.remember-me label {
+    margin-bottom: 0; /* Ghi đè margin-bottom mặc định của label */
+    font-weight: normal; /* Chữ thường */
+    color: #555;
+    cursor: pointer;
+}
+
+.forgot-password-link {
+    color: #0d6efd; /* Màu xanh giống nút */
+    text-decoration: none;
+}
+
+.forgot-password-link:hover {
+    text-decoration: underline;
+}
+
+
+/* === Button Styling === */
+.submit-button-container {
+    margin-top: 10px; /* Có thể điều chỉnh nếu cần */
+}
+
+.form-group button[type="submit"] {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #0d6efd;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-group button[type="submit"]:hover {
+    background-color: #0b5ed7;
+}
+
+/* === Register Link Styling === */
+.register-link {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 0.9em;
+    color: #555;
+}
+
+.register-link a {
+    color: #0d6efd;
+    text-decoration: none;
+    font-weight: 500; /* Hơi đậm hơn */
+}
+
+.register-link a:hover {
+    text-decoration: underline;
+}
