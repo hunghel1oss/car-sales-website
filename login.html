@@ -3,23 +3,46 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Đăng nhập</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="./file scc/login.css"> 
+    <title>Đăng Nhập</title>
 </head>
 <body>
     <div class="login-container">
         <h2>Đăng nhập</h2>
-        <form class="login-form">
-            <div class="form-group">
-                <label for="username">Tên đăng nhập:</label>
-                <input type="text" id="username" name="username" required>
-            </div>
-            <div class="form-group">
-                <label for="password">Mật khẩu:</label>
-                <input type="password" id="password" name="password" required>
-            </div>
-            <button type="submit">Đăng nhập</button>
-        </form>
+
+        <div class="login-form">
+            <form action="#" method="post"> 
+                <div class="form-group">
+                    <label for="username">Số điện thoại hoặc Email</label>
+                    <input type="text" id="username" name="username" required placeholder="Nhập số điện thoại hoặc email">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Mật khẩu</label>
+                    <input type="password" id="password" name="password" required placeholder="Nhập mật khẩu">
+                    <img src="./flie ảnh/crossed-eye.svg" alt="ẩn mật khẩu" class="img-register">
+                    <img src="./flie ảnh/eye.svg" alt="hiển thị mật khẩu" class="img-register">
+                </div>
+
+                <div class="form-options">
+                    <div class="remember-me">
+                        <input type="checkbox" id="remember" name="remember">
+                        <label for="remember">Ghi nhớ đăng nhập</label>
+                    </div>
+                    <a href="forgot_password.html" class="forgot-password-link">Quên mật khẩu?</a> 
+                </div>
+
+                <div class="form-group submit-button-container">
+                    <button type="submit">Đăng Nhập</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="register-link">
+            <p>Chưa có tài khoản? <a href="./register.html">Đăng ký ngay</a></p> 
+        </div>
     </div>
+
+    <script src="./file js/login.js"></script>
 </body>
 </html>
