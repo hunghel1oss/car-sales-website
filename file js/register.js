@@ -1,13 +1,12 @@
 document.addEventListener('DOMContentLoaded', function() {
     const registerForm = document.querySelector('.register-form form');
 
-    // Hàm mã hóa mật khẩu đơn giản (chỉ cho mục đích minh họa!)
     function simpleHash(password) {
         let hash = 0;
         for (let i = 0; i < password.length; i++) {
             const char = password.charCodeAt(i);
             hash = ((hash << 5) - hash) + char;
-            hash = hash & hash; // Convert to 32bit integer
+            hash = hash & hash;
         }
         return hash;
     }
