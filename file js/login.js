@@ -29,10 +29,11 @@ document.addEventListener('DOMContentLoaded', function() {
         const password = passwordInput.value;
         const storedUsers = localStorage.getItem('users');
         const usersArray = storedUsers ? JSON.parse(storedUsers) : [];
-        const user = usersArray.find(user => (user.phone === username || user.fullname.toLowerCase() === username.toLowerCase()) && user.matkhau === simpleHash(password)); // Sử dụng hàm băm tương tự như trang đăng ký
+        const user = usersArray.find(user => (user.phone === username || user.fullname.toLowerCase() === username.toLowerCase()) && user.matkhau === simpleHash(password)); 
 
         if (user) {
-            alert('Đăng nhập thành công!');
+            alert('Đăng nhập thành công! ID người dùng: ' + user.id);
+            localStorage.setItem('loggedInUserId', user.id); 
             const rememberCheckbox = document.getElementById('remember');
             if (rememberCheckbox.checked) {
                 localStorage.setItem('rememberLogin', 'true');
@@ -46,12 +47,13 @@ document.addEventListener('DOMContentLoaded', function() {
             alert('Số điện thoại/Email hoặc mật khẩu không đúng.');
         }
     });
+
     function simpleHash(password) {
         let hash = 0;
         for (let i = 0; i < password.length; i++) {
             const char = password.charCodeAt(i);
             hash = ((hash << 5) - hash) + char;
-            hash = hash & hash; 
+            hash = hash & hash;
         }
         return hash;
     }
