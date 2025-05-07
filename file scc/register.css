@@ -1,0 +1,110 @@
+/* === Basic Reset & Body Styling === */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif; /* Chọn font chữ dễ đọc */
+    background: linear-gradient(#355c7d, #6c5b7b, #c06c84);
+    display: flex; /* Sử dụng Flexbox để căn giữa dễ hơn */
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Đảm bảo body chiếm toàn bộ chiều cao */
+    padding: 15px; /* Giữ lại padding nếu muốn có khoảng cách từ mép màn hình */
+}
+
+/* === Register Container Styling (Khung trắng) === */
+.register-container {
+    /* Bỏ position absolute khi dùng flexbox trên body để căn giữa */
+    /* position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); */
+
+    background-color: white; 
+    color: #333;             
+    border-radius: 15px;     
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); 
+    padding: 30px 40px;     
+    width: 100%;          
+    max-width: 450px;     
+    position: relative;  
+}
+
+/* === Title Styling (Chữ "Đăng ký") === */
+.register-container h2 {
+    text-align: center;      /* Căn giữa tiêu đề */
+    margin-bottom: 25px;    /* Khoảng cách dưới tiêu đề */
+    color: #333;             /* Màu chữ đậm */
+    font-size: 1.8em;        /* Kích thước chữ */
+    font-weight: 600;       /* Độ đậm */
+}
+
+/* === Form Group Styling === */
+.form-group {
+    margin-bottom: 20px; /* Khoảng cách giữa các nhóm input */
+}
+
+/* === Label Styling === */
+.form-group label {
+    display: block;         /* Label chiếm 1 dòng riêng */
+    margin-bottom: 8px;     /* Khoảng cách dưới label */
+    font-weight: 500;       /* Chữ hơi đậm */
+    color: #555;             /* Màu chữ xám */
+    font-size: 0.9em;
+}
+
+/* === Input Styling === */
+.form-group input[type="text"],
+.form-group input[type="date"],
+.form-group input[type="tel"],
+.form-group input[type="password"] {
+    width: 100%;            /* Input chiếm toàn bộ chiều rộng */
+    padding: 12px 15px;     /* Padding bên trong input */
+    border: 1px solid #ccc; /* Viền xám nhạt */
+    border-radius: 8px;      /* Bo góc nhẹ cho input */
+    font-size: 1em;
+    color: #333;
+}
+
+.form-group input::placeholder { /* Style cho chữ placeholder */
+    color: #aaa;
+}
+
+/* === Button Styling === */
+.submit-button-container {
+    margin-top: 30px; /* Thêm khoảng cách phía trên nút */
+}
+
+.form-group button[type="submit"] {
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #0d6efd; /* Màu xanh dương cho nút */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Hiệu ứng chuyển màu khi hover */
+}
+
+.form-group button[type="submit"]:hover {
+    background-color: #0b5ed7; /* Màu xanh đậm hơn khi hover */
+}
+.register-container .register-form .form-group .img-register{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 385px;
+    top: 390px;
+}
+.register-container .register-form .form-group .img-register2{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 385px;
+    top: 480px;
+}

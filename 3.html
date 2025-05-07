@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Huan Hung Carshop - Combined</title>
+    <!-- Box Icons -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <!-- === SWIPER CSS === -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"/>
+
+    <!-- Link to your custom CSS (MUST be AFTER Swiper CSS) -->
+    <link rel="stylesheet" href="./file scc/3.css"/>
+
+</head>
+<body>
+    <!-- Combined Header (Remains the same) -->
+    <header>
+        <div class="nav container">
+            <a href="#home" class="logo"> Huan <span> Hung</span> Carshop </a>
+            <ul class="navbar">
+                <li><a href="#home" class="active"> Home </a></li>
+                <li><a href="#cars"> New Car</a></li>
+                <li><a href="#about"> About </a></li>
+                <li><a href="#parts"> Old Car </a></li>
+                <li><a href="#blog"> Our Blog </a></li>
+            </ul>
+            <div class="header-actions">
+                <div class="directory">
+                    <a href="#" class="directory-link" onclick="toggleDropdown('categoryDropdownContainer', event)">
+                        <img src="./flie ảnh/menu-burger.svg" alt="Danh mục" class="header-icon">
+                        <span class="action-text">Danh mục</span>
+                        <img src="./flie ảnh/so-xuong-de-hien-ra.svg" alt="Arrow" class="header-icon arrow-icon">
+                    </a>
+                    <div id="categoryDropdownContainer" class="dropdown-content"></div>
+                </div>
+                <div class="account">
+                   <a href="#" class="account-link" onclick="toggleDropdown('accountDropdownContainer', event)">
+                        <img src="./flie ảnh/avata.svg" alt="Tài Khoản" class="header-icon">
+                        <span class="action-text">Tài khoản</span>
+                        <img src="./flie ảnh/so-xuong-de-hien-ra.svg" alt="Arrow" class="header-icon arrow-icon">
+                    </a>
+                   <div id="accountDropdownContainer" class="dropdown-content"></div>
+                </div>
+                 <i class='bx bx-search-alt-2 header-icon' id="search-icon"></i>
+                 <div class="search-box container"><input type="search" placeholder="Search here..."></div>
+                 <i class='bx bx-menu header-icon' id="menu-icon"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Home Section (with SLIDER) -->
+    <section class="home" id="home">
+        <div class="home-content-wrapper container">
+
+            <!-- === SLIDER (Replaces Sidebar) === -->
+            <div class="home-slider-container">
+                 <!-- Swiper -->
+                <div class="swiper homeSwiper">
+                    <div class="swiper-wrapper">
+                        <!-- Add your slides here -->
+                        <!-- === UPDATE IMAGE PATHS === -->
+                        <div class="swiper-slide"><img src="https://hoanghamobile.com/tin-tuc/wp-content/uploads/2024/07/anh-o-to-40.jpg" alt="Featured Car 1"></div>
+                        <div class="swiper-slide"><img src="https://hanoiketoan.edu.vn/uploads/blog/2024/11/13/b85886ba85aa0f35b82a96a2251ba121eeafdccd-1731450970.jpg" alt="Featured Car 2"></div>
+                        <div class="swiper-slide"><img src="https://cdn.dailyxe.com.vn/image/vinfast-lux-a20-do-than-rong-lay-cam-hung-tu-batman-190093j.jpg?w=390" alt="Featured Car 3"></div>
+                        <div class="swiper-slide"><img src="https://baogiaothong.mediacdn.vn/files/bts.cuong/2018/09/03/093506-2019-lexus-rc-6.jpg" alt="Featured Car 4"></div>
+                        <div class="swiper-slide"><img src="https://www.xwised.com.tr/images/haberler/2024/04/opel-den-elektrikli-araba-hamlesi-hedef-2028-283.jpg" alt="Featured Car 5"></div>
+                        </div>
+                    <!-- Add Pagination -->
+                    <div class="swiper-pagination"></div>
+                    <!-- Add Navigation -->
+                    <div class="swiper-button-next"></div>
+                    <div class="swiper-button-prev"></div>
+                </div>
+            </div>
+            <!-- === End Slider === -->
+
+
+            <!-- Original Home Text -->
+            <div class="home-text">
+                <h1> We Have Everything <br> Your <span> Car</span> Need</h1>
+                <a href="#" class="btn"> Discover Now</a>
+            </div>
+
+        </div> <!-- End of home-content-wrapper -->
+    </section>
+
+    <!-- Cars Section (Remains the same) -->
+    <section class="cars" id="cars">
+        <div class="heading"><span> ALL Cars</span><h2>We have all types Cars</h2><p>...</p></div>
+        <div class="cars-container container">
+            <div class="box"><img src="img/car1.jpg" alt="Porsche Car"><h2> Porsche Car </h2></div>
+            <div class="box"><img src="img/car2.jpg" alt="Porsche Car"><h2> Porsche Car </h2></div>
+            <div class="box"><img src="img/car3.jpg" alt="Porsche Car"><h2> Porsche Car </h2></div>
+            <div class="box"><img src="img/car4.jpg" alt="Porsche Car"><h2> Porsche Car </h2></div>
+            <div class="box"><img src="img/car5.jpg" alt="Porsche Car"><h2> Porsche Car </h2></div>
+            <div class="box"><img src="img/car6.jpg" alt="Porsche Car"><h2> Porsche Car </h2></div>
+        </div>
+    </section>
+
+    <!-- About Section (Remains the same) -->
+    <section class="about container" id="about">
+         <div class="about-img"><img src="img/about.png" alt="About Us Image"></div>
+         <div class="about-text"><span>About Us</span><h2> Cheap Prices With Quality Cars</h2><p>...</p><a href="#" class="btn"> Learn More</a></div>
+    </section>
+
+    <!-- Parts Section (Remains the same) -->
+     <section class="parts" id="parts">
+        <div class="heading"><span> What We Offer</span><h2> Our Pre-Owned Cars Are Excellent</h2><p>...</p></div>
+         <div class="parts-container container">
+            <div class="box"><img src="img/part1.png" alt="Part"><h3> Auto Parts</h3><span> $120.99 </span><i class='bx bxs-star'>(6)</i><div class="box-footer"><a href="#" class="btn"> Buy</a><a href="#" class="details"> Details </a></div></div>
+            <div class="box"><img src="img/part2.png" alt="Part"><h3> Auto Parts</h3><span> $120.99 </span><i class='bx bxs-star'>(6)</i><div class="box-footer"><a href="#" class="btn"> Buy</a><a href="#" class="details"> Details </a></div></div>
+            <div class="box"><img src="img/part3.png" alt="Part"><h3> Auto Parts</h3><span> $120.99 </span><i class='bx bxs-star'>(6)</i><div class="box-footer"><a href="#" class="btn"> Buy</a><a href="#" class="details"> Details </a></div></div>
+            <div class="box"><img src="img/part4.png" alt="Part"><h3> Auto Parts</h3><span> $120.99 </span><i class='bx bxs-star'>(6)</i><div class="box-footer"><a href="#" class="btn"> Buy</a><a href="#" class="details"> Details </a></div></div>
+            <div class="box"><img src="img/part5.png" alt="Part"><h3> Auto Parts</h3><span> $120.99 </span><i class='bx bxs-star'>(6)</i><div class="box-footer"><a href="#" class="btn"> Buy</a><a href="#" class="details"> Details </a></div></div>
+            <div class="box"><img src="img/part6.png" alt="Part"><h3> Auto Parts</h3><span> $120.99 </span><i class='bx bxs-star'>(6)</i><div class="box-footer"><a href="#" class="btn"> Buy</a><a href="#" class="details"> Details </a></div></div>
+         </div>
+     </section>
+
+    <!-- Blog Section (Remains the same) -->
+     <section class="blog" id="blog">
+        <div class="heading"><span> Blog & News </span><h2> Our Blog Content</h2><p>...</p></div>
+        <div class="blog-container container">
+             <div class="box"><img src="img/card1.jpg" alt="Blog"><div class="blog-content"><span> Feb 12 2025</span><h3> How to get Perfect Car</h3><p>...</p><a href="#" class="blog-btn"> Read More <i class='bx bx-right-arrow-alt'></i></a></div></div>
+             <div class="box"><img src="img/card1.jpg" alt="Blog"><div class="blog-content"><span> Feb 14 2025</span><h3> Maintaining Your Car</h3><p>...</p><a href="#" class="blog-btn"> Read More <i class='bx bx-right-arrow-alt'></i></a></div></div>
+             <div class="box"><img src="img/card1.jpg" alt="Blog"><div class="blog-content"><span> Feb 16 2025</span><h3> Top 5 Electric Cars</h3><p>...</p><a href="#" class="blog-btn"> Read More <i class='bx bx-right-arrow-alt'></i></a></div></div>
+        </div>
+     </section>
+
+     <!-- Footer (Remains the same) -->
+     <section class="footer">
+        <div class="footer-container container">
+            <div class="footer-box"><a href="#" class="logo"> Huan <span> Hung</span> Carshop </a><div class="social"><a href="#"><i class='bx bxl-facebook'></i></a><a href="#"><i class='bx bxl-twitter'></i></a><a href="#"><i class='bx bxl-instagram'></i></a><a href="#"><i class='bx bxl-youtube'></i></a></div></div>
+            <div class="footer-box"><h3>Page</h3><a href="#home"> Home</a><a href="#cars"> New Cars</a><a href="#parts"> Old Cars</a><a href="#blog"> Blog</a></div>
+            <div class="footer-box"><h3>Legal</h3><a href="#"> Privacy </a><a href="#"> Refund Policy</a><a href="#"> Cookie Policy</a></div>
+            <div class="footer-box"><h3> Contact</h3><p> Hanoi</p><p> Hai Duong</p><p> Hai Phong</p></div>
+        </div>
+     </section>
+
+     <!-- Copyright (Remains the same) -->
+     <div class="copyright"><p> © NguyenVuCongHuan All Rights Reserved</p></div>
+
+    <!-- === SWIPER JS === -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Link to your custom JS (MUST be AFTER Swiper JS) -->
+    <script src="./file js/3.js"></script>
+    <script src="./file js/current3.js"></script>
+
+</body>
+</html>

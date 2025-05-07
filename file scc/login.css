@@ -24,6 +24,7 @@ body {
     padding: 30px 40px;
     width: 100%;
     max-width: 450px;
+    position: relative;
 }
 
 /* === Title Styling ("Đăng nhập") === */
@@ -35,7 +36,6 @@ body {
     font-weight: 600;
 }
 
-/* === Form Group Styling === */
 .form-group {
     margin-bottom: 20px;
 }
@@ -67,10 +67,10 @@ body {
 /* === Form Options Styling (Remember Me & Forgot Password) === */
 .form-options {
     display: flex;
-    justify-content: space-between; /* Đẩy 2 phần tử ra 2 bên */
-    align-items: center;         /* Căn giữa theo chiều dọc */
-    margin-bottom: 25px;        /* Khoảng cách trước nút Đăng nhập */
-    font-size: 0.9em;           /* Chữ nhỏ hơn một chút */
+    justify-content: space-between; 
+    align-items: center;        
+    margin-bottom: 25px;        
+    font-size: 0.9em;           
 }
 
 .remember-me {
@@ -79,19 +79,19 @@ body {
 }
 
 .remember-me input[type="checkbox"] {
-    margin-right: 5px; /* Khoảng cách giữa checkbox và label */
+    margin-right: 5px; 
     cursor: pointer;
 }
 
 .remember-me label {
-    margin-bottom: 0; /* Ghi đè margin-bottom mặc định của label */
-    font-weight: normal; /* Chữ thường */
+    margin-bottom: 0; 
+    font-weight: normal; 
     color: #555;
     cursor: pointer;
 }
 
 .forgot-password-link {
-    color: #0d6efd; /* Màu xanh giống nút */
+    color: #0d6efd; 
     text-decoration: none;
 }
 
@@ -138,4 +138,11 @@ body {
 
 .register-link a:hover {
     text-decoration: underline;
+}
+.login-container .login-form .form-group .img-register{
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 385px;
+    top: 215px;
 }
