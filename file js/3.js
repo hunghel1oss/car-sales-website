@@ -1,110 +1,171 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const navLinkNewCar = document.getElementById('nav-link-new-car'); 
+    const navLinkOldCar = document.getElementById('nav-link-old-car'); 
+    const homeNavLinkForFilter = document.querySelector('.navbar a.nav-link[href="#home"]');
+    const displaySection = document.getElementById('filtered-cars-display');
+    const displayContainer = document.querySelector('#filtered-cars-display .cars-display-container');
+    const categorySpan = document.getElementById('filtered-cars-category');
+    const titleH2 = document.getElementById('filtered-cars-title');
+    const categoryDropdownContainer = document.getElementById('categoryDropdownContainer');
+    function renderCarCard(car) {
+        const carBox = document.createElement('div');
+        carBox.classList.add('box');
+        carBox.setAttribute('data-car-id', car.ID);
+        carBox.setAttribute('data-user-id', car.userId || 'unknown'); 
 
-    // --- Header Interaction Elements ---
-    const searchBox = document.querySelector('.search-box');
-    const searchIcon = document.querySelector('#search-icon');
-    const navbar = document.querySelector('.navbar');
-    const menuIcon = document.querySelector('#menu-icon');
-    const header = document.querySelector('header');
+        const firstImage = (car.imagesBase64 && car.imagesBase64.length > 0) ? car.imagesBase64[0] : './img/car-placeholder.png';
 
-    // --- Dropdown Elements ---
-    // const directoryLink = document.querySelector('.directory-link'); // <<< COMMENT OUT HOẶC XÓA
-    // const accountLink = document.querySelector('.account-link');     // <<< COMMENT OUT HOẶC XÓA
-    // const categoryDropdown = document.getElementById('categoryDropdownContainer'); // Để lại nếu dùng cho closeAllDropdowns
-    // const accountDropdown = document.getElementById('accountDropdownContainer');   // Để lại nếu dùng cho closeAllDropdowns
+        carBox.innerHTML = `
+            <img src="${firstImage}" alt="${car.brand || ''} ${car.model || ''}">
+            <h2>${car.brand || 'N/A'} ${car.model || ''}</h2>
+            ${car.price ? `<p class="car-card-price">${car.price.toLocaleString('vi-VN')} VNĐ</p>` : '<p class="car-card-price">Liên hệ</p>'}
+            ${car.year ? `<p class="car-card-year">Năm: ${car.year}</p>` : ''}
+            <p class="car-seller-info">Người đăng: ${car.sellerName || 'N/A'}</p>
+        `;
 
-
-    // --- Event Listeners ---
-
-    // Search Box Toggle
-    if (searchIcon && searchBox) {
-        searchIcon.onclick = (e) => {
-            e.stopPropagation();
-            searchBox.classList.toggle('active');
-            if (navbar) navbar.classList.remove('active');
-            // closeAllDropdowns(); 
-        };
-    } else { console.warn("Search icon or search box not found."); }
-
-    // Mobile Menu Toggle
-    if (menuIcon && navbar) {
-        menuIcon.onclick = (e) => {
-            e.stopPropagation();
-            navbar.classList.toggle('active');
-            if (searchBox) searchBox.classList.remove('active');
-            // closeAllDropdowns(); 
-        };
-    } else { console.warn("Menu icon or navbar not found."); }
-
-    // Header Shadow on Scroll
-    if (header) {
-        window.addEventListener('scroll', () => {
-            header.classList.toggle('shadow', window.scrollY > 0);
-            if (navbar) navbar.classList.remove('active');
-            if (searchBox) searchBox.classList.remove('active');
-            // closeAllDropdowns(); 
+        carBox.addEventListener('click', function() {
+            localStorage.setItem('selectedCarIdToView', this.getAttribute('data-car-id'));
+            localStorage.setItem('selectedCarOwnerIdToView', this.getAttribute('data-user-id'));
+            window.location.href = './car-details.html';
         });
-    } else { console.warn("Header element not found."); }
+        return carBox;
+    }
 
-    // Dropdown Toggles
-    
-    if (directoryLink && categoryDropdown) {
-        directoryLink.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const fileToLoad = 'category-content.html';
-            toggleDropdown(categoryDropdown.id, fileToLoad);
+    function setActiveNavLink(activeLink) {
+        const navLinks = document.querySelectorAll('.navbar .nav-link');
+        navLinks.forEach(link => link.classList.remove('active'));
+        if (activeLink) {
+            activeLink.classList.add('active');
+        }
+    }
+
+    function displayFilteredResults(filterType, filterValue = null) {
+        if (!displaySection || !displayContainer || !categorySpan || !titleH2) {
+            console.error("Required display elements not found in DOM.");
+            return;
+        }
+
+        const userSpecificData = JSON.parse(localStorage.getItem('userSpecificData')) || {};
+        let allCars = [];
+        for (const userId in userSpecificData) {
+            if (userSpecificData[userId]?.carAds) {
+                userSpecificData[userId].carAds.forEach(carAd => {
+                    allCars.push({ ...carAd, userId: userId }); 
+                });
+            }
+        }
+
+        let filteredCars = [];
+        let categoryText = "Kết quả lọc";
+        let titleText = "";
+        if (filterType === 'condition') {
+            filteredCars = allCars.filter(car => car.condition === filterValue);
+            categoryText = filterValue === 'new' ? "Xe Mới (Lọc)" : "Xe Cũ (Lọc)";
+            titleText = filterValue === 'new' ? "Danh sách xe mới" : "Danh sách xe đã qua sử dụng";
+        } else if (filterType === 'seats') { 
+             let seatDescription = "";
+             if (filterValue === "8+") {
+                 filteredCars = allCars.filter(car => car.seats && !isNaN(parseInt(car.seats)) && parseInt(car.seats) >= 8);
+                 seatDescription = "8 chỗ trở lên";
+             } else {
+                 const seatNumber = parseInt(filterValue);
+                 if (!isNaN(seatNumber)) {
+                    filteredCars = allCars.filter(car => car.seats && parseInt(car.seats) === seatNumber);
+                    seatDescription = `${filterValue} chỗ`;
+                 } else {
+                    console.error("Invalid seat value:", filterValue); filteredCars = []; seatDescription = "không hợp lệ";
+                 }
+             }
+            categoryText = "Lọc theo số chỗ";
+            titleText = `Xe ${seatDescription}`;
+        } else {
+            console.error("Unknown filter type:", filterType);
+            return; 
+        }
+        displayContainer.innerHTML = ''; 
+        categorySpan.textContent = categoryText;
+        titleH2.textContent = titleText;
+
+        if (filteredCars.length > 0) {
+            filteredCars.forEach(car => {
+                displayContainer.appendChild(renderCarCard(car));
+            });
+        } else {
+            displayContainer.innerHTML = `<p class="no-cars-message">Không tìm thấy xe nào phù hợp.</p>`;
+        }
+        document.querySelectorAll('.default-view-section').forEach(sec => {
+             if(sec) sec.style.display = 'none'; 
+        });
+        displaySection.style.display = 'block';
+        displaySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    if (navLinkNewCar) {
+        navLinkNewCar.addEventListener('click', (e) => {
+            e.preventDefault();
+            displayFilteredResults('condition', 'new'); 
+            setActiveNavLink(navLinkNewCar);
         });
     }
-     if (accountLink && accountDropdown) {
-        accountLink.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const fileToLoad = 'account-content.html';
-            toggleDropdown(accountDropdown.id, fileToLoad);
+
+    if (navLinkOldCar) {
+        navLinkOldCar.addEventListener('click', (e) => {
+            e.preventDefault();
+            displayFilteredResults('condition', 'used'); 
+            setActiveNavLink(navLinkOldCar);
         });
     }
-    
+    function resetFilterView(activeNavLink = null) {
+         if (displaySection) displaySection.style.display = 'none';
+         document.querySelectorAll('.default-view-section').forEach(sec => {
+              if(sec) sec.style.display = sec.id === 'about' ? 'flex' : 'block'; 
+         });
+         if(activeNavLink){
+             setActiveNavLink(activeNavLink);
+         } else {
+             setActiveNavLink(document.querySelector('.navbar a.nav-link[href="#home"]'));
+         }
+    }
 
-    // Close elements when clicking outside
-    window.addEventListener('click', (event) => {
-        if (searchBox && !searchBox.contains(event.target) && searchIcon && !searchIcon.contains(event.target)) {
-             searchBox.classList.remove('active');
-        }
-        if (navbar && !navbar.contains(event.target) && menuIcon && !menuIcon.contains(event.target)) {
-            navbar.classList.remove('active');
-        }
-        // let clickedInsideDropdown = false;
-        // document.querySelectorAll('.dropdown-content.active').forEach(dropdown => { // Chỉ kiểm tra dropdown đang active
-        //     if(dropdown.contains(event.target)) clickedInsideDropdown = true;
-        // });
-        // // const categoryTrigger = document.querySelector('.directory-link');
-        // // const accountTrigger = document.querySelector('.account-link');
-        // // let clickedOnToggleLink = (categoryTrigger && categoryTrigger.contains(event.target)) || (accountTrigger && accountTrigger.contains(event.target));
-
-        // // if (!clickedOnToggleLink && !clickedInsideDropdown) {
-        // //     closeAllDropdowns();
-        // // }
+    if (homeNavLinkForFilter) {
+        homeNavLinkForFilter.addEventListener('click', (e) => {
+            resetFilterView(homeNavLinkForFilter);
+        });
+    }
+    const otherNavLinks = document.querySelectorAll('.navbar .nav-link:not([data-nav-filter]):not([href="#home"])'); // Sửa data attribute nếu khác
+    otherNavLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            const href = link.getAttribute('href');
+            if (href && href.startsWith('#')) {
+                resetFilterView(link);
+                 const targetSection = document.querySelector(href);
+                 if(targetSection) targetSection.style.display = targetSection.id === 'about' ? 'flex' : 'block'; // Đảm bảo section đích hiển thị
+            } else {
+                setActiveNavLink(link);
+            }
+        });
     });
 
-    // Prevent clicks inside dropdowns/search box from closing them immediately
-    if (searchBox) searchBox.addEventListener('click', e => e.stopPropagation());
-    // document.querySelectorAll('.dropdown-content').forEach(dropdown => dropdown.addEventListener('click', e => e.stopPropagation())); // current3.js sẽ xử lý
+    if (categoryDropdownContainer) {
+        categoryDropdownContainer.addEventListener('click', function(event) {
+            const targetLink = event.target.closest('a.seat-filter-link'); 
 
-    // --- Swiper Slider Initialization --- (Giữ nguyên)
-    const homeSwiper = new Swiper(".homeSwiper", {
-        // ... (config swiper giữ nguyên) ...
-    });
+            if (targetLink) {
+                event.preventDefault();
+                const seatFilterValue = targetLink.getAttribute('data-seats'); 
 
-    // --- Helper Functions ---
-    /* <<< COMMENT OUT HOẶC XÓA TOÀN BỘ HÀM closeAllDropdowns VÀ toggleDropdown TRONG 3.js >>>
-    function closeAllDropdowns(excludeId = null) {
-        // ...
+                if (seatFilterValue) {
+                    displayFilteredResults('seats', seatFilterValue);
+                    setActiveNavLink(null); 
+                    categoryDropdownContainer.classList.remove('active'); 
+                } else {
+                    console.warn("Seat filter link missing data-seats attribute.");
+                }
+            }
+        });
+    } else {
+        console.warn("#categoryDropdownContainer not found for seat filter listener.");
     }
 
-    async function toggleDropdown(dropdownId, fileToLoad) {
-        // ...
-    }
-    */
-
-     console.log("3.js script loaded and initialized (dropdown logic moved to current3.js)."); // Thay đổi log
-
-}); // End DOMContentLoaded
+    console.log("3.js (Handling Navbar and Seat Filtering) loaded.");
+}); 
