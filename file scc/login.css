@@ -1,4 +1,3 @@
-/* === Basic Reset & Body Styling === */
 * {
     padding: 0;
     margin: 0;
@@ -14,8 +13,6 @@ body {
     min-height: 100vh;
     padding: 15px;
 }
-
-/* === Login Container Styling (Khung trắng) === */
 .login-container {
     background-color: white;
     color: #333;
@@ -27,7 +24,6 @@ body {
     position: relative;
 }
 
-/* === Title Styling ("Đăng nhập") === */
 .login-container h2 {
     text-align: center;
     margin-bottom: 25px;
@@ -39,8 +35,6 @@ body {
 .form-group {
     margin-bottom: 20px;
 }
-
-/* === Label Styling === */
 .form-group label {
     display: block;
     margin-bottom: 8px;
@@ -49,7 +43,6 @@ body {
     font-size: 0.9em;
 }
 
-/* === Input Styling === */
 .form-group input[type="text"],
 .form-group input[type="password"] {
     width: 100%;
@@ -64,7 +57,6 @@ body {
     color: #aaa;
 }
 
-/* === Form Options Styling (Remember Me & Forgot Password) === */
 .form-options {
     display: flex;
     justify-content: space-between; 
@@ -99,10 +91,8 @@ body {
     text-decoration: underline;
 }
 
-
-/* === Button Styling === */
 .submit-button-container {
-    margin-top: 10px; /* Có thể điều chỉnh nếu cần */
+    margin-top: 10px; 
 }
 
 .form-group button[type="submit"] {
@@ -121,8 +111,6 @@ body {
 .form-group button[type="submit"]:hover {
     background-color: #0b5ed7;
 }
-
-/* === Register Link Styling === */
 .register-link {
     margin-top: 25px;
     text-align: center;
@@ -133,7 +121,7 @@ body {
 .register-link a {
     color: #0d6efd;
     text-decoration: none;
-    font-weight: 500; /* Hơi đậm hơn */
+    font-weight: 500; 
 }
 
 .register-link a:hover {

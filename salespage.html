@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng tin bán xe</title>
-    <link rel="stylesheet" href="./file scc/salespage-modify.css"> <!-- Hoặc CSS chung của bạn -->
+    <link rel="stylesheet" href="./file scc/salespage- modify.css">
 </head>
 <body>
-    <div class="salespage-container"> <!-- Optional wrapper for consistent padding -->
+    <div class="salespage-container">
         <div class="salespage">
             <h1 id="pageTitle">Đăng tin bán xe</h1>
             <form id="carForm">
@@ -31,9 +31,9 @@
                             <option value="">-- Chọn số chỗ --</option>
                             <option value="2">2 chỗ</option>
                             <option value="4">4 chỗ</option>
-                            <option value="5">5 chỗ</option>
+                            <!-- <option value="5">5 chỗ</option> -->
                             <option value="7">7 chỗ</option>
-                            <option value="8+">8 chỗ trở lên</option>
+                            <option value="8+">Bán Tải</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -48,8 +48,6 @@
                         <label for="price">Giá bán (VNĐ):<span class="required-asterisk">*</span></label>
                         <input type="number" id="price" name="price" required class="input-number-fg" min="0">
                     </div>
-
-                    <!-- **** TRƯỜNG CHỌN TRẠNG THÁI XE **** -->
                     <div class="form-group">
                         <label for="carStatus">Trạng thái xe:<span class="required-asterisk">*</span></label>
                         <select id="carStatus" name="carStatus" required class="input-select-fg">
@@ -58,22 +56,22 @@
                             <option value="sold">Đã bán</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="carStatus">Trạng thái xe:<span class="required-asterisk">*</span></label>
-                        <select id="carStatus" name="carStatus" required class="input-select-fg">
-                        <option value="available">Còn xe</option>
-                        <option value="pending">Đang giao dịch</option>
-                        <option value="sold">Đã bán</option>
-                        </select>
-                    </div>
                 </div>
 
                 <h2>Hình Ảnh Xe</h2>
                 <div class="form-section">
                     <div class="form-group">
-                        <label for="imageUpload">Tải lên hình ảnh (tối đa 10 ảnh, ảnh đầu tiên sẽ là ảnh đại diện):<span class="required-asterisk">*</span></label>
-                        <input type="file" id="imageUpload" name="imageUpload" accept="image/*" multiple>
-                        <div id="imagePreviewContainer"></div>
+                        <label>Link Hình Ảnh (Dán link trực tiếp, tối đa 5 link):<span class="required-asterisk">*</span></label>
+                        <small>Ảnh đầu tiên sẽ là ảnh đại diện. Đảm bảo link là link trực tiếp đến file ảnh (.jpg, .png, .jpeg, .gif, .webp).</small>
+                        <div id="imageLinksContainer">
+                            <input type="url" name="imageLinks[]" class="input-text-fg image-link-input" placeholder="Link ảnh 1 (ảnh đại diện)" required>
+                            <input type="url" name="imageLinks[]" class="input-text-fg image-link-input" placeholder="Link ảnh 2 (tùy chọn)">
+                            <input type="url" name="imageLinks[]" class="input-text-fg image-link-input" placeholder="Link ảnh 3 (tùy chọn)">
+                            <input type="url" name="imageLinks[]" class="input-text-fg image-link-input" placeholder="Link ảnh 4 (tùy chọn)">
+                            <input type="url" name="imageLinks[]" class="input-text-fg image-link-input" placeholder="Link ảnh 5 (tùy chọn)">
+                        </div>
+                        <div id="imagePreviewFromLinksContainer" style="display: flex; flex-wrap: wrap; margin-top: 10px; gap: 10px;">
+                        </div>
                     </div>
                 </div>
 

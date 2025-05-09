@@ -9,10 +9,7 @@
     justify-content: space-between;
     gap: 20px;
 }
-/* .current3 .directory{
-    display: flex;
-    flex-direction: column;
-} */
+
 .current3 .directory .directory3{
     
     display: flex;
@@ -66,8 +63,6 @@
     align-items: center;
     gap: 20px;
 }
-
-/* sổ xuống */
 
 .current3 .directory{
     position: relative;
