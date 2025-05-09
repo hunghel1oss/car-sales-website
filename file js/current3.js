@@ -1,14 +1,92 @@
+// file js/current3.js
+
+// Khởi tạo namespace toàn cục (nếu chưa có)
+window.HuanHungCarshopApp = window.HuanHungCarshopApp || {};
+
+// --- CÁC HÀM TIỆN ÍCH CHO XE ĐÃ LƯU (Giữ lại) ---
+window.HuanHungCarshopApp.getSavedCarsForCurrentUser = function() {
+    const loggedInUserId = localStorage.getItem('loggedInUserId');
+    if (!loggedInUserId) return [];
+    return JSON.parse(localStorage.getItem(`savedCars_${loggedInUserId}`)) || [];
+};
+
+window.HuanHungCarshopApp.isCarSaved = function(carId) {
+    if (!carId) return false;
+    const savedCars = window.HuanHungCarshopApp.getSavedCarsForCurrentUser();
+    return savedCars.includes(carId);
+};
+
+window.HuanHungCarshopApp.toggleSaveCar = function(carId, heartIconElementOrButton, buttonTextElement = null) {
+    const loggedInUserId = localStorage.getItem('loggedInUserId');
+    if (!loggedInUserId) {
+        alert("Vui lòng đăng nhập để thực hiện thao tác này!");
+        return { success: false, isNowSaved: false };
+    }
+    if (!carId) {
+        console.error("toggleSaveCar được gọi với carId không hợp lệ.");
+        return { success: false, isNowSaved: false };
+    }
+
+    let savedCars = window.HuanHungCarshopApp.getSavedCarsForCurrentUser();
+    const carIndex = savedCars.indexOf(carId);
+    let isNowSaved = false;
+
+    if (carIndex > -1) {
+        savedCars.splice(carIndex, 1);
+        isNowSaved = false;
+        if (heartIconElementOrButton && heartIconElementOrButton.classList.contains('car-card-heart')) {
+            heartIconElementOrButton.classList.remove('bxs-heart', 'saved');
+            heartIconElementOrButton.classList.add('bx-heart');
+            heartIconElementOrButton.title = "Lưu xe này";
+        }
+        if (buttonTextElement && heartIconElementOrButton && heartIconElementOrButton.id === 'saveAdButton') {
+            buttonTextElement.textContent = "Lưu tin";
+            const icon = heartIconElementOrButton.querySelector('i');
+            if (icon) {
+                icon.classList.remove('bxs-heart');
+                icon.classList.add('bx-heart');
+            }
+            heartIconElementOrButton.title = "Lưu tin này";
+        }
+    } else {
+        savedCars.push(carId);
+        isNowSaved = true;
+        if (heartIconElementOrButton && heartIconElementOrButton.classList.contains('car-card-heart')) {
+            heartIconElementOrButton.classList.remove('bx-heart');
+            heartIconElementOrButton.classList.add('bxs-heart', 'saved');
+            heartIconElementOrButton.title = "Bỏ lưu xe này";
+        }
+        if (buttonTextElement && heartIconElementOrButton && heartIconElementOrButton.id === 'saveAdButton') {
+            buttonTextElement.textContent = "Bỏ lưu tin";
+            const icon = heartIconElementOrButton.querySelector('i');
+            if (icon) {
+                icon.classList.remove('bx-heart');
+                icon.classList.add('bxs-heart');
+            }
+             heartIconElementOrButton.title = "Bỏ lưu tin này";
+        }
+    }
+    localStorage.setItem(`savedCars_${loggedInUserId}`, JSON.stringify(savedCars));
+    return { success: true, isNowSaved: isNowSaved };
+};
+// --- KẾT THÚC HÀM XE ĐÃ LƯU ---
+
+
+// --- KHÔNG CÒN LOGIC GIỎ HÀNG CHO HEADER ---
+// window.HuanHungCarshopApp.updateCartIconCount = function() { ... }; // ĐÃ XÓA
+
+
 const dropdownConfig = {
     'categoryDropdownContainer': {
         filePath: './directory.html',
-        contentSelector: '.Danh-muc',  
+        contentSelector: '.Danh-muc',
         loaded: false,
         element: null
     },
     'accountDropdownContainer': {
-        filePath: './account.html',  
-        contentSelector: '.account',    
-        loaded: false, 
+        filePath: './account.html', // File này nên chứa phiên bản không có "Giỏ hàng"
+        contentSelector: '.account',
+        loaded: false,
         element: null
     }
 };
@@ -17,13 +95,12 @@ function initializeDOMElements() {
     for (const id in dropdownConfig) {
         dropdownConfig[id].element = document.getElementById(id);
         if (!dropdownConfig[id].element) {
-            console.error(`Dropdown container with ID '${id}' not found.`);
+            // console.error(`Dropdown container with ID '${id}' not found.`);
         }
     }
 }
 
 async function fetchContent(filePath, contentSelector) {
-
     try {
         const response = await fetch(filePath);
         if (!response.ok) throw new Error(`HTTP error! Status: ${response.status} for ${filePath}`);
@@ -47,6 +124,7 @@ function closeAllActiveDropdowns(excludeId = null) {
         }
     }
 }
+window.closeAllActiveDropdowns = closeAllActiveDropdowns;
 
 function updateAccountDropdown() {
     const loggedInUserId = localStorage.getItem('loggedInUserId');
@@ -54,27 +132,24 @@ function updateAccountDropdown() {
     const accountLinkTextSpan = document.querySelector('.account-link span.action-text');
 
     if (!accountDropdownContainer) {
-        console.error("Account dropdown container (#accountDropdownContainer) not found.");
         return;
-    }
-    if (!accountLinkTextSpan) {
-        console.warn("Account link text span (.account-link span.action-text) not found.");
     }
 
     let users = JSON.parse(localStorage.getItem('users')) || [];
     let currentUser = loggedInUserId ? users.find(u => u.id && u.id.toString() === loggedInUserId) : null;
 
-    if (currentUser) { 
+    if (currentUser) {
         if (accountLinkTextSpan) accountLinkTextSpan.textContent = currentUser.fullname;
+        // HTML Dropdown khi đăng nhập (KHÔNG CÓ "Giỏ hàng" hoặc "Yêu Cầu Xe")
         const loggedInDropdownHTML = `
             <div class="account-dropdown-logged-in">
                 <p class="greeting">Xin chào, ${currentUser.fullname}</p><hr>
                 <div class="ND-account"><h3 class="Tk">Quản lý</h3>
-                    <div class="ta"><img src="./flie ảnh/shopping-cart.svg" alt="GH" class="img-ta"><a href="#" class="Tk">Giỏ hàng</a></div>
+                    <!-- <div class="ta"><img src="./flie ảnh/shopping-cart.svg" alt="GH" class="img-ta"><a href="#" class="Tk" id="cartLink">Yêu Cầu Xe</a></div>  XÓA DÒNG NÀY -->
                     <div class="ta"><img src="./flie ảnh/donban.svg" alt="ĐB" class="img-ta"><a href="#user-posted-cars" class="Tk nav-link-internal">Đơn bán của tôi</a></div>
                 </div><hr>
                 <div class="ND-account"><h3 class="Tk">Tiện ích</h3>
-                    <div class="ta"><img src="./flie ảnh/tindaluu.svg" alt="TL" class="img-ta"><a href="#" class="Tk">Tin đã lưu</a></div>
+                    <div class="ta"><img src="./flie ảnh/tindaluu.svg" alt="TL" class="img-ta"><a href="#" class="Tk" id="savedAdsLink">Tin đã lưu</a></div>
                 </div><hr>
                 <div class="ND-account sell-car-link-container">
                     <a href="./salespage.html" class="Tk" id="sellCarBtnLoggedIn">Bán Xe Ngay</a>
@@ -94,30 +169,52 @@ function updateAccountDropdown() {
         accountDropdownContainer.querySelector('a[href="#user-posted-cars"]')?.addEventListener('click', (e) => {
             e.preventDefault();
             const targetLink = document.querySelector(`.navbar a.nav-link[href="#user-posted-cars"]`);
-            resetToDefaultView(targetLink);
-            document.getElementById('user-posted-cars')?.scrollIntoView({ behavior: 'smooth' });
+            if (typeof resetFilterView_3js === 'function') {
+                resetFilterView_3js(targetLink);
+            }
+            const userPostedCarsSection = document.getElementById('user-posted-cars');
+            if (userPostedCarsSection) {
+                 userPostedCarsSection.style.display = 'block';
+                 userPostedCarsSection.scrollIntoView({ behavior: 'smooth' });
+            }
             closeAllActiveDropdowns();
         });
 
-    } else { 
+        document.getElementById('savedAdsLink')?.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (typeof window.displaySavedCarsFrom3JS === 'function') {
+                window.displaySavedCarsFrom3JS();
+            } else { console.error("Function displaySavedCarsFrom3JS is not available."); }
+            closeAllActiveDropdowns();
+        });
+
+        // KHÔNG CÒN EVENT LISTENER CHO #cartLink
+
+    } else {
         if (accountLinkTextSpan) accountLinkTextSpan.textContent = "Tài khoản";
-        dropdownConfig['accountDropdownContainer'].loaded = false; 
+        dropdownConfig['accountDropdownContainer'].loaded = false;
     }
+    // KHÔNG CÒN GỌI window.HuanHungCarshopApp.updateCartIconCount();
 }
+
 async function toggleDropdown(containerId, event) {
     if (event) { event.preventDefault(); event.stopPropagation(); }
     const config = dropdownConfig[containerId];
     if (!config || !config.element) return;
+
     const dropdownElement = config.element;
     const isActiveBeforeToggle = dropdownElement.classList.contains('active');
-    if (!isActiveBeforeToggle) closeAllActiveDropdowns(containerId);
+
+    if (!isActiveBeforeToggle) {
+        closeAllActiveDropdowns(containerId);
+    }
 
     if (isActiveBeforeToggle) {
         dropdownElement.classList.remove('active');
     } else {
         if (containerId === 'accountDropdownContainer') {
-            updateAccountDropdown(); 
-            if (!config.loaded) { 
+            updateAccountDropdown();
+            if (!localStorage.getItem('loggedInUserId') && !config.loaded) {
                 dropdownElement.innerHTML = `<p class="dropdown-loading">Loading...</p>`;
                 const contentHTML = await fetchContent(config.filePath, config.contentSelector);
                 dropdownElement.innerHTML = contentHTML;
@@ -129,287 +226,154 @@ async function toggleDropdown(containerId, event) {
             dropdownElement.innerHTML = contentHTML;
             config.loaded = !contentHTML.includes("dropdown-error");
         }
-        if(config.loaded || containerId === 'accountDropdownContainer'){
+        if (config.loaded || (containerId === 'accountDropdownContainer' && localStorage.getItem('loggedInUserId'))) {
              dropdownElement.classList.add('active');
         }
     }
 }
+window.toggleDropdown = toggleDropdown;
 
-function renderCarCardGlobal(car, cardType = 'general') {
-    const carBox = document.createElement('div');
-    carBox.classList.add('box');
-    carBox.setAttribute('data-car-id', car.ID);
-    carBox.setAttribute('data-user-id', car.userId || 'unknown');
-    const styleType = (cardType === 'old-onload' || cardType === 'filtered-used') ? 'old' : 'new';
-    carBox.setAttribute('data-style-type', styleType);
-    const firstImage = (car.imagesBase64 && car.imagesBase64.length > 0) ? car.imagesBase64[0] : './img/car-placeholder.png';
 
-    let imageAndPriceHTML = `<img src="${firstImage}" alt="${car.brand || ''} ${car.model || ''}">`;
-    if (styleType === 'new') {
-        imageAndPriceHTML += `<p class="car-card-price">${car.price ? car.price.toLocaleString('vi-VN') + ' VNĐ' : 'Liên hệ'}</p>`;
-    }
-
-    let textContentHTML = `<div class="card-text-content">`;
-    if (styleType === 'new') {
-        textContentHTML += `
-            <h2>${car.brand || 'N/A'} ${car.model || ''}</h2>
-            ${car.year ? `<p class="car-card-year">Năm: ${car.year}</p>` : ''}
-            <p class="car-seller-info">Người đăng: ${car.sellerName || 'N/A'}</p>`;
-    } else { 
-        textContentHTML += `
-            <h3>${car.brand || 'N/A'} ${car.model || ''}</h3>
-            ${car.price ? `<span class="car-price-old">${car.price.toLocaleString('vi-VN')} VNĐ</span>` : '<span class="car-price-old">Liên hệ</span>'}
-            ${car.year ? `<p class="car-year-old">Năm: ${car.year}</p>` : ''}
-            ${car.mileage ? `<p class="car-mileage-old">Đã chạy: ${car.mileage.toLocaleString('vi-VN')} km</p>` : ''}`;
-    }
-    textContentHTML += `</div>`; 
-
-    let footerHTML = '';
-    if (styleType === 'old') {
-        footerHTML = `<div class="box-footer-details"><a href="#" class="details-btn">Xem Chi Tiết</a></div>`;
-    }
-    carBox.innerHTML = imageAndPriceHTML + textContentHTML + footerHTML;
-
-    carBox.addEventListener('click', function(e) {
-        if (!e.target.classList.contains('details-btn')) {
-            localStorage.setItem('selectedCarIdToView', this.getAttribute('data-car-id'));
-            localStorage.setItem('selectedCarOwnerIdToView', this.getAttribute('data-user-id'));
-            window.location.href = './car-details.html';
-        }
-    });
-    const detailsBtn = carBox.querySelector('.details-btn');
-    if (detailsBtn) {
-         detailsBtn.addEventListener('click', (e) => {
-             e.preventDefault(); e.stopPropagation();
-             localStorage.setItem('selectedCarIdToView', carBox.getAttribute('data-car-id'));
-             localStorage.setItem('selectedCarOwnerIdToView', carBox.getAttribute('data-user-id'));
-             window.location.href = './car-details.html';
-         });
-     }
-    return carBox;
-}
-
-function displayUserCarAds() {
-    const loggedInUserId = localStorage.getItem('loggedInUserId');
-    const container = document.querySelector('#user-posted-cars .user-cars-container');
-    const sectionElement = document.getElementById('user-posted-cars');
-    if (!container || !sectionElement) return;
-    container.innerHTML = '';
-    if (!loggedInUserId) {
-        container.innerHTML = `<p class="no-cars-message">Vui lòng <a href="login.html" class="text-link">đăng nhập</a> để xem xe của bạn.</p>`;
-        sectionElement.style.display = 'none'; return;
-    }
-    sectionElement.style.display = 'block';
-    const userData = JSON.parse(localStorage.getItem('userSpecificData'))?.[loggedInUserId];
-    if (userData?.carAds?.length > 0) {
-        userData.carAds.forEach(car => container.appendChild(renderCarCardGlobal(car, 'user-posted')));
-    } else {
-        container.innerHTML = `<p class="no-cars-message">Bạn chưa đăng xe nào. <a href="salespage.html" class="text-link">Đăng ngay!</a></p>`;
-    }
-}
-
-function loadInitialCarsIntoSections() {
-    const newCarsContainer = document.querySelector('#new-cars-on-load .new-cars-onload-container');
-    const oldCarsContainer = document.querySelector('#old-cars-on-load .old-cars-onload-container');
-    const userSpecificData = JSON.parse(localStorage.getItem('userSpecificData')) || {};
-    let allCars = [];
-    for (const userId in userSpecificData) { if (userSpecificData[userId]?.carAds) { userSpecificData[userId].carAds.forEach(carAd => allCars.push({ ...carAd, userId })); } }
-
-    if (newCarsContainer) {
-        newCarsContainer.innerHTML = '';
-        const newCarsData = allCars.filter(car => car.condition === 'new');
-        if (newCarsData.length > 0) newCarsData.forEach(car => newCarsContainer.appendChild(renderCarCardGlobal(car, 'new-onload')));
-        else newCarsContainer.innerHTML = `<p class="no-cars-message">Hiện chưa có xe mới nào được đăng.</p>`;
-    }
-    if (oldCarsContainer) {
-        oldCarsContainer.innerHTML = '';
-        const oldCarsData = allCars.filter(car => car.condition === 'used');
-        if (oldCarsData.length > 0) oldCarsData.forEach(car => oldCarsContainer.appendChild(renderCarCardGlobal(car, 'old-onload')));
-        else oldCarsContainer.innerHTML = `<p class="no-cars-message">Hiện chưa có xe cũ nào được đăng.</p>`;
-    }
-}
-function displayCarsInCentralArea(carsToDisplay, type, filterDescription = "") {
-    const displaySection = document.getElementById('filtered-cars-display');
-    const displayContainer = document.querySelector('#filtered-cars-display .cars-display-container');
-    const categorySpan = document.getElementById('filtered-cars-category');
-    const titleH2 = document.getElementById('filtered-cars-title');
-    if (!displaySection || !displayContainer || !categorySpan || !titleH2) return;
-
-    displayContainer.innerHTML = '';
-    document.querySelectorAll('.default-view-section').forEach(sec => sec.style.display = 'none');
-
-    if (type === 'search') { categorySpan.textContent = "Kết quả tìm kiếm cho"; titleH2.textContent = `"${filterDescription}"`; }
-    else if (type === 'new') { categorySpan.textContent = "Xe Mới (Lọc)"; titleH2.textContent = "Danh sách xe mới"; }
-    else if (type === 'used') { categorySpan.textContent = "Xe Cũ (Lọc)"; titleH2.textContent = "Danh sách xe đã qua sử dụng"; }
-    else if (type === 'seats') { categorySpan.textContent = "Lọc theo số chỗ"; titleH2.textContent = `Xe ${filterDescription}`; }
-
-    if (carsToDisplay.length > 0) {
-        carsToDisplay.forEach(car => {
-            const cardStyleType = car.condition === 'new' ? 'filtered-new' : 'filtered-used';
-            displayContainer.appendChild(renderCarCardGlobal(car, cardStyleType));
-        });
-    } else {
-        let message = `Không tìm thấy xe nào.`;
-        if (type === 'search') message = `Không tìm thấy xe nào với từ khóa "${filterDescription}".`;
-        else message = `Không tìm thấy xe ${filterDescription} nào.`;
-        displayContainer.innerHTML = `<p class="no-cars-message">${message}</p>`;
-    }
-    displaySection.style.display = 'block';
-    displaySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    updateNavbarActiveState(null);
-}
-
-function performCarSearch(searchTerm) {
-    searchTerm = searchTerm.toLowerCase().trim();
-    if (!searchTerm) { resetToDefaultView(document.querySelector('.navbar a.nav-link[href="#home"]')); return; }
-    const userSpecificData = JSON.parse(localStorage.getItem('userSpecificData')) || {};
-    let allCars = [];
-    for (const userId in userSpecificData) { if (userSpecificData[userId]?.carAds) { userSpecificData[userId].carAds.forEach(carAd => allCars.push({ ...carAd, userId })); } }
-    const searchResults = allCars.filter(car =>
-        (car.brand && car.brand.toLowerCase().includes(searchTerm)) ||
-        (car.model && car.model.toLowerCase().includes(searchTerm)) ||
-        (car.sellerName && car.sellerName.toLowerCase().includes(searchTerm)) ||
-        (car.year && car.year.toString().includes(searchTerm))
-    );
-    displayCarsInCentralArea(searchResults, 'search', searchTerm);
-}
-
-function filterCarsBySeats(seatValue) {
-    const userSpecificData = JSON.parse(localStorage.getItem('userSpecificData')) || {};
-    let allCars = [];
-    for (const userId in userSpecificData) { if (userSpecificData[userId]?.carAds) { userSpecificData[userId].carAds.forEach(carAd => allCars.push({ ...carAd, userId })); } }
-
-    let filteredCars;
-    let filterDescription;
-    if (seatValue === "8+") {
-        filteredCars = allCars.filter(car => car.seats && !isNaN(parseInt(car.seats)) && parseInt(car.seats) >= 8);
-        filterDescription = "8 chỗ trở lên";
-    } else {
-        const seatNumber = parseInt(seatValue);
-         if (!isNaN(seatNumber)) {
-            filteredCars = allCars.filter(car => car.seats && parseInt(car.seats) === seatNumber);
-            filterDescription = `${seatValue} chỗ`;
-         } else { filteredCars = []; filterDescription = "không hợp lệ"; }
-    }
-    displayCarsInCentralArea(filteredCars, 'seats', filterDescription);
-}
-
-function updateNavbarActiveState(activeLink) {
-    document.querySelectorAll('.navbar .nav-link').forEach(link => link.classList.remove('active'));
-    if (activeLink) activeLink.classList.add('active');
-}
-
-function resetToDefaultView(newActiveLink = null) {
-    document.getElementById('filtered-cars-display').style.display = 'none';
-    document.querySelectorAll('.default-view-section').forEach(sec => {
-        if (sec.id === 'user-posted-cars') {
-             sec.style.display = localStorage.getItem('loggedInUserId') ? 'block' : 'none';
-        } else { sec.style.display = sec.id === 'about' ? 'flex' : 'block'; }
-    });
-    loadInitialCarsIntoSections(); 
-    displayUserCarAds(); 
-    if (newActiveLink) updateNavbarActiveState(newActiveLink);
-    else updateNavbarActiveState(document.querySelector('.navbar a.nav-link[href="#home"]'));
-}
 document.addEventListener('DOMContentLoaded', () => {
     initializeDOMElements();
     updateAccountDropdown();
-    displayUserCarAds();
-    loadInitialCarsIntoSections();
+    // KHÔNG CÒN GỌI window.HuanHungCarshopApp.updateCartIconCount();
+
+    const header = document.querySelector('header:not(.page-header-details)');
+    if (header) {
+        const handleScroll = () => {
+            if(document.body.contains(header)) {
+                 header.classList.toggle('shadow', window.scrollY > 0);
+            }
+        };
+        window.addEventListener('scroll', handleScroll);
+        handleScroll();
+    }
 
     const searchInputGlobal = document.getElementById('searchInputGlobal');
-    const searchBoxGlobal = document.querySelector('.search-box.container');
-    const searchIconHeader = document.querySelector('#search-icon');
-    const mainNavbar = document.querySelector('.navbar');
-    const menuIcon = document.querySelector('#menu-icon');
-    const header = document.querySelector('header');
-    const categoryDropdownContainer = document.getElementById('categoryDropdownContainer');
+    const searchBoxGlobal = document.querySelector('header .search-box.container');
+    const searchIconHeader = document.getElementById('search-icon');
+    const mainNavbar = document.querySelector('header .navbar');
+    const menuIcon = document.getElementById('menu-icon');
+    // KHÔNG CÒN THAM CHIẾU ĐẾN headerCartIcon nữa
 
-    if (searchInputGlobal) {
-        let searchTimeout;
-        searchInputGlobal.addEventListener('input', () => {
-            clearTimeout(searchTimeout);
-            if (searchInputGlobal.value.trim() === "") { resetToDefaultView(document.querySelector('.navbar a.nav-link[href="#home"]')); }
-            else { searchTimeout = setTimeout(() => performCarSearch(searchInputGlobal.value), 500); }
-        });
-        searchInputGlobal.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') { e.preventDefault(); clearTimeout(searchTimeout); performCarSearch(searchInputGlobal.value); if (searchBoxGlobal) searchBoxGlobal.classList.remove('active'); }
-        });
-    }
+    // KHÔNG CÒN EVENT LISTENER CHO headerCartIcon
+
     if (searchIconHeader && searchBoxGlobal) {
+        // ... (logic search icon giữ nguyên)
         searchIconHeader.addEventListener('click', (e) => {
-            e.stopPropagation(); searchBoxGlobal.classList.toggle('active');
-            if (mainNavbar) mainNavbar.classList.remove('active'); closeAllActiveDropdowns();
-            if (searchBoxGlobal.classList.contains('active')) searchInputGlobal.focus();
-            else if (searchInputGlobal.value.trim() === "") resetToDefaultView();
+            e.stopPropagation();
+            searchBoxGlobal.classList.toggle('active');
+            if (mainNavbar) mainNavbar.classList.remove('active');
+            closeAllActiveDropdowns();
+            if (searchBoxGlobal.classList.contains('active') && searchInputGlobal) {
+                searchInputGlobal.focus();
+            }
         });
     }
-    if (menuIcon && mainNavbar) {
-        menuIcon.addEventListener('click', (e) => {
-            e.stopPropagation(); mainNavbar.classList.toggle('active');
-            if (searchBoxGlobal) searchBoxGlobal.classList.remove('active'); closeAllActiveDropdowns();
-        });
-    }
-    if (header) {
-        const handleScroll = () => { header.classList.toggle('shadow', window.scrollY > 0); };
-        window.addEventListener('scroll', handleScroll); handleScroll();
-    }
-    window.addEventListener('click', (event) => {
-        if (searchBoxGlobal && searchBoxGlobal.classList.contains('active') && !searchBoxGlobal.contains(event.target) && !searchIconHeader?.contains(event.target)) { searchBoxGlobal.classList.remove('active'); if (searchInputGlobal.value.trim() === "") resetToDefaultView(); }
-        if (mainNavbar && mainNavbar.classList.contains('active') && !mainNavbar.contains(event.target) && !menuIcon?.contains(event.target)) { mainNavbar.classList.remove('active'); }
-        let clickedInsideActiveDropdown = false;
-        document.querySelectorAll('.dropdown-content.active').forEach(dropdown => { if (dropdown.contains(event.target)) clickedInsideActiveDropdown = true; });
-        let clickedOnDropdownTrigger = event.target.closest('a[onclick*="toggleDropdown"]');
-        if (!clickedInsideActiveDropdown && !clickedOnDropdownTrigger) closeAllActiveDropdowns();
-    });
-    if (searchBoxGlobal) searchBoxGlobal.addEventListener('click', e => e.stopPropagation());
 
-    document.querySelectorAll('.navbar .nav-link').forEach(link => {
+    if (menuIcon && mainNavbar) {
+        // ... (logic menu icon giữ nguyên)
+        menuIcon.addEventListener('click', (e) => {
+            e.stopPropagation();
+            mainNavbar.classList.toggle('active');
+            if (searchBoxGlobal) searchBoxGlobal.classList.remove('active');
+            closeAllActiveDropdowns();
+        });
+    }
+
+    window.addEventListener('click', (event) => {
+        // ... (logic click ngoài để đóng giữ nguyên)
+        if (searchBoxGlobal && searchBoxGlobal.classList.contains('active') &&
+            !searchBoxGlobal.contains(event.target) &&
+            (!searchIconHeader || !searchIconHeader.contains(event.target))) {
+            searchBoxGlobal.classList.remove('active');
+        }
+        if (mainNavbar && mainNavbar.classList.contains('active') &&
+            !mainNavbar.contains(event.target) &&
+            (!menuIcon || !menuIcon.contains(event.target))) {
+            mainNavbar.classList.remove('active');
+        }
+        let clickedInsideActiveDropdown = false;
+        document.querySelectorAll('.dropdown-content.active').forEach(dropdown => {
+            if (dropdown.contains(event.target)) {
+                clickedInsideActiveDropdown = true;
+            }
+        });
+        let clickedOnDropdownTrigger = event.target.closest('a[onclick*="toggleDropdown"]');
+        if (!clickedInsideActiveDropdown && !clickedOnDropdownTrigger) {
+            closeAllActiveDropdowns();
+        }
+    });
+
+    if (searchBoxGlobal) {
+        searchBoxGlobal.addEventListener('click', e => e.stopPropagation());
+    }
+
+    document.querySelectorAll('header .navbar .nav-link').forEach(link => {
+        // ... (logic click nav link giữ nguyên, đảm bảo các hàm gọi từ 3.js vẫn đúng)
         link.addEventListener('click', function(e) {
-            const filterType = this.getAttribute('data-nav-filter'); 
+            const filterType = this.getAttribute('data-nav-filter');
             const hrefTarget = this.getAttribute('href');
 
-            if (filterType) { 
+            if (typeof setActiveNavLink_3js === 'function') {
+                 setActiveNavLink_3js(this);
+            }
+
+            if (filterType) {
                 e.preventDefault();
-                const userSpecificData = JSON.parse(localStorage.getItem('userSpecificData')) || {};
-                let allCars = [];
-                for (const userId in userSpecificData) { if (userSpecificData[userId]?.carAds) { userSpecificData[userId].carAds.forEach(carAd => allCars.push({ ...carAd, userId })); } }
-                const carsToShow = allCars.filter(car => car.condition === filterType);
-                displayCarsInCentralArea(carsToShow, filterType); 
-                updateNavbarActiveState(this);
-            } else if (hrefTarget === '#home' || (hrefTarget.startsWith('#') && document.getElementById(hrefTarget.substring(1)))) {
-                
+                if (typeof displayFilteredResults_3js === 'function') {
+                    displayFilteredResults_3js('condition', filterType, 'navbar');
+                }
+            } else if (hrefTarget === '#home') {
+                e.preventDefault();
+                if (typeof resetFilterView_3js === 'function') {
+                    resetFilterView_3js(this);
+                }
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else if (hrefTarget && hrefTarget.startsWith('#')) {
                 const targetId = hrefTarget.substring(1);
                 const targetSection = document.getElementById(targetId);
-
-                resetToDefaultView(this); 
-
-                if (hrefTarget === '#home') { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-                else if (targetSection) {
-                     targetSection.style.display = targetSection.id === 'about' ? 'flex' : 'block';
-                     setTimeout(()=> targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' }), 0);
+                if (targetSection && targetSection.classList.contains('default-view-section')) {
+                    e.preventDefault();
+                    if (typeof resetFilterView_3js === 'function') {
+                         resetFilterView_3js(this);
+                    }
+                    setTimeout(()=> {
+                        if (targetId === 'user-posted-cars' && typeof displayUserPostedCars_3js === 'function') {
+                            displayUserPostedCars_3js();
+                        } else if (targetSection) {
+                            targetSection.style.display = targetSection.id === 'about' ? 'flex' : 'block';
+                        }
+                        targetSection?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    },0);
                 }
-            } else { updateNavbarActiveState(this); } 
-
-            if (mainNavbar?.classList.contains('active')) mainNavbar.classList.remove('active'); 
+            }
+            if (mainNavbar?.classList.contains('active')) mainNavbar.classList.remove('active');
+            closeAllActiveDropdowns();
         });
     });
 
-    if (categoryDropdownContainer) {
-        categoryDropdownContainer.addEventListener('click', function(event) {
+    const categoryDropdownContainer_current3 = document.getElementById('categoryDropdownContainer');
+    if (categoryDropdownContainer_current3) {
+        // ... (logic lọc theo số chỗ giữ nguyên)
+        categoryDropdownContainer_current3.addEventListener('click', function(event) {
             const targetLink = event.target.closest('a.seat-filter-link');
             if (targetLink) {
                 event.preventDefault();
                 const seatFilterValue = targetLink.getAttribute('data-seats');
-                if (seatFilterValue) {
-                    filterCarsBySeats(seatFilterValue);
+                if (seatFilterValue && typeof displayFilteredResults_3js === 'function') {
+                    displayFilteredResults_3js('seats', seatFilterValue, 'category');
+                     if (typeof setActiveNavLink_3js === 'function') setActiveNavLink_3js(null);
                     closeAllActiveDropdowns();
                 }
             }
         });
     }
+
     const homeSwiperEl = document.querySelector(".homeSwiper");
     if (typeof Swiper !== 'undefined' && homeSwiperEl) {
+        // ... (logic Swiper giữ nguyên)
         new Swiper(".homeSwiper", {
             spaceBetween: 30, centeredSlides: true,
             autoplay: { delay: 4000, disableOnInteraction: false },
@@ -417,7 +381,12 @@ document.addEventListener('DOMContentLoaded', () => {
             navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
             loop: true, effect: 'fade', fadeEffect: { crossFade: true },
         });
-    } else { console.warn("Swiper or .homeSwiper element not found."); }
+    }
 
-    console.log("current3.js fully initialized.");
-}); 
+    const currentYearSpan = document.getElementById('currentYear');
+    if (currentYearSpan) currentYearSpan.textContent = new Date().getFullYear();
+    const currentYearDetailsSpan = document.getElementById('currentYearDetails');
+    if (currentYearDetailsSpan) currentYearDetailsSpan.textContent = new Date().getFullYear();
+
+    console.log("current3.js (no cart logic) fully initialized.");
+});

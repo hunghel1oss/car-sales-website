@@ -1,63 +1,278 @@
-*{
-    font-family: sans-serif;
-    margin: 20px;
-    background-color: #f4f4f4;
-}
-.salespage {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+/* salespage-modify.css */
+
+* {
+    font-family: 'Poppins', sans-serif; /* Sử dụng font nhất quán với các trang khác nếu có */
+    margin: 0; /* Reset margin mặc định */
+    padding: 0; /* Reset padding mặc định */
+    box-sizing: border-box; /* Cách tính kích thước box tốt hơn */
 }
 
-.salespage h1{
+body {
+    background-color: #f4f4f4;
+    color: #333;
+    line-height: 1.6;
+    padding: 20px; /* Thêm padding cho body để nội dung không sát viền */
+}
+
+.salespage {
+    max-width: 850px; /* Tăng nhẹ max-width để form rộng hơn chút */
+    margin: 20px auto; /* Căn giữa và thêm khoảng cách trên dưới */
+    background-color: #fff;
+    padding: 30px; /* Tăng padding bên trong */
+    border-radius: 8px;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Box shadow rõ hơn một chút */
+}
+
+.salespage h1#pageTitle { /* Nhắm cụ thể hơn vào H1 của trang */
     text-align: center;
     color: #333;
+    font-size: 2em; /* Tăng kích thước H1 */
+    margin-bottom: 30px;
+    font-weight: 600;
 }
-.salespage .carForm {
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-    gap: 20px;
+
+.salespage h2 {
+    font-size: 1.5em; /* Tăng kích thước H2 */
+    color: #444; /* Màu chữ H2 đậm hơn chút */
+    margin-top: 35px; /* Tăng khoảng cách trên của H2 */
+    margin-bottom: 20px; /* Tăng khoảng cách dưới của H2 */
+    border-bottom: 1px solid #e0e0e0; /* Đường kẻ rõ hơn */
+    padding-bottom: 12px;
+    font-weight: 500;
 }
-.salespage .carForm .form-group {
-    margin-bottom: 15px;
-    padding: 10px;
+.salespage h2:first-of-type { /* Không có margin-top cho H2 đầu tiên */
+    margin-top: 0;
 }
-.salespage .carForm .form-group label {
+
+
+.form-section {
+    background-color: #f9f9f9;
+    padding: 25px; /* Tăng padding */
+    border-radius: 6px; /* Giảm nhẹ bo góc */
+    margin-bottom: 25px; /* Tăng khoảng cách giữa các section */
+    border: 1px solid #e9e9e9; /* Thêm border nhẹ */
+    /* box-shadow: 0 1px 3px rgba(0,0,0,0.05); */ /* Có thể bỏ shadow này nếu salespage đã có shadow */
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+.form-group:last-child {
+    margin-bottom: 0; /* Bỏ margin bottom cho group cuối cùng trong section */
+}
+
+.form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 8px;
+    font-weight: 500; /* Giữ nguyên */
+    color: #333;
+    font-size: 0.95em; /* Điều chỉnh kích thước label */
+}
+
+.required-asterisk {
+    color: #dc3545; /* Màu đỏ chuẩn hơn cho dấu * */
+    margin-left: 3px;
     font-weight: bold;
-    color: #555;
 }
-.input-text-fg {
-        width: calc(100% - 12px);
-        padding: 8px;
-        border: 1px solid #ccc;
-        border-radius: 4px;
-        box-sizing: border-box;
-}
-.input-number-fg {
-    width: calc(100% - 12px);
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+
+/* --- Input Styles --- */
+.form-group input[type="text"],
+.form-group input[type="number"],
+.form-group input[type="tel"],
+.form-group input[type="email"],
+.form-group input[type="date"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ced4da; /* Màu border chuẩn hơn */
+    border-radius: 5px;
     box-sizing: border-box;
+    font-size: 1em;
+    color: #495057; /* Màu chữ trong input */
+    background-color: #fff; /* Nền trắng cho input */
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
-.form-group-thanhtoan{
+/* Loại bỏ mũi tên cho input number trên Chrome, Safari, Edge, Opera */
+.form-group input[type=number]::-webkit-outer-spin-button,
+.form-group input[type=number]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+/* Loại bỏ mũi tên cho input number trên Firefox */
+.form-group input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+.form-group input[type="file"] {
+    padding: 8px 0; /* Điều chỉnh padding cho input file */
+}
+
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--main-color, #fb923c); /* Sử dụng var() với fallback */
+    outline: 0; /* Bỏ outline mặc định */
+    box-shadow: 0 0 0 0.2rem rgba(251, 146, 60, 0.25); /* Shadow khi focus, dùng màu main */
+}
+
+/* --- Image Preview Styles --- */
+#imagePreviewContainer {
     display: flex;
-    align-items: center;
-    margin-bottom: 15px;
-    padding: 10px;
+    flex-wrap: wrap;
+    margin-top: 15px; /* Tăng khoảng cách với input file */
+    gap: 12px; /* Tăng khoảng cách giữa các ảnh */
+    padding: 10px; /* Thêm padding cho container preview */
+    background-color: #e9ecef; /* Nền nhẹ cho khu vực preview */
+    border-radius: 5px;
+    min-height: 120px; /* Đảm bảo có không gian ngay cả khi chưa có ảnh */
+    align-items: center; /* Căn giữa các item nếu không đủ một hàng */
+    /* justify-content: flex-start; */ /* Mặc định */
 }
-.submit-button {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border: none;
+
+.image-preview-item {
+    position: relative;
+    border: 1px solid #adb5bd; /* Border rõ hơn */
+    padding: 4px; /* Tăng padding */
+    background-color: #fff;
     border-radius: 4px;
+    display: flex; /* Thay vì inline-flex để kiểm soát tốt hơn */
+    align-items: center;
+    justify-content: center;
+    width: 120px; /* Tăng kích thước preview */
+    height: 120px;
+    overflow: hidden; /* Đảm bảo ảnh không tràn ra ngoài */
+}
+
+.image-preview-item img {
+    /* max-width: 100%; /* Đã có width/height cố định cho item, nên ảnh sẽ theo object-fit */
+    /* max-height: 100%; */
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: cover;
+    border-radius: 2px; /* Bo góc nhẹ cho ảnh */
+}
+
+.remove-image-btn {
+    position: absolute;
+    top: -10px; /* Điều chỉnh vị trí */
+    right: -10px;
+    background: rgba(220, 53, 69, 0.85); /* Màu đỏ chuẩn hơn và đậm hơn */
+    color: white;
+    border: 2px solid white; /* Border dày hơn */
+    border-radius: 50%;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 14px; /* Chữ X to hơn */
+    width: 24px; /* Nút to hơn */
+    height: 24px;
+    line-height: 20px; /* Căn chữ X */
+    text-align: center;
+    padding: 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.25); /* Shadow rõ hơn */
+    font-weight: bold;
+    transition: background-color 0.2s ease;
+}
+.remove-image-btn:hover {
+    background: rgba(200, 33, 49, 0.95); /* Đậm hơn khi hover */
+}
+
+/* --- Conditional Fields --- */
+#usedCarDetails,
+textarea#accidentDetails { /* Nhắm cụ thể hơn vào textarea */
+    margin-top: 15px; /* Tăng khoảng cách */
+    padding-left: 20px;
+    border-left: 3px solid #dee2e6; /* Màu border nhạt hơn */
+}
+
+textarea#accidentDetails { /* Style riêng cho textarea accident */
+    /* width đã được set trong HTML, giữ lại hoặc bỏ nếu dùng 100% từ class chung */
+    /* min-height đã được set trong HTML */
+}
+
+
+/* --- Submit Button --- */
+.submit-button {
+    display: block;
+    width: 100%;
+    max-width: 320px; /* Tăng max-width */
+    margin: 40px auto 20px; /* Tăng margin-top */
+    padding: 12px 25px; /* Tăng padding */
+    background-color: var(--main-color, #007bff); /* Dùng fallback màu xanh nếu --main-color không có */
+    color: white;
+    border: none;
+    border-radius: 6px; /* Bo góc nhiều hơn */
+    font-size: 1.15em; /* Chữ to hơn */
+    font-weight: 600; /* Đậm hơn */
+    cursor: pointer;
+    text-transform: uppercase; /* Viết hoa chữ */
+    letter-spacing: 0.5px; /* Giãn cách chữ */
+    transition: background-color 0.2s ease, transform 0.15s ease, box-shadow 0.15s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.submit-button:hover {
+    background-color: #e08024; /* Giả sử --main-color là cam, đây là màu đậm hơn */
+    /* Nếu --main-color là xanh (fallback), thì màu hover có thể là: #0056b3 */
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+.submit-button:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .salespage {
+        margin: 10px;
+        padding: 20px;
+    }
+    .salespage h1#pageTitle {
+        font-size: 1.8em;
+    }
+    .salespage h2 {
+        font-size: 1.3em;
+    }
+    .form-section {
+        padding: 20px;
+    }
+    .image-preview-item {
+        width: 100px;
+        height: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    .salespage {
+        padding: 15px;
+    }
+    .form-group input[type="text"],
+    .form-group input[type="number"],
+    /* ... các input khác ... */
+    .form-group select,
+    .form-group textarea {
+        font-size: 0.95em; /* Giảm font chữ input trên mobile */
+    }
+    .submit-button {
+        font-size: 1.05em;
+        padding: 10px 20px;
+    }
+    #imagePreviewContainer {
+        gap: 8px;
+    }
+    .image-preview-item {
+        width: 90px;
+        height: 90px;
+    }
+    .remove-image-btn {
+        width: 20px;
+        height: 20px;
+        line-height: 16px; /* Điều chỉnh cho kích thước nút nhỏ hơn */
+        font-size: 12px;
+        top: -7px;
+        right: -7px;
+    }
 }

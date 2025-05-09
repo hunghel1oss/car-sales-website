@@ -1,131 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng tin bán xe</title>
-    <link rel="stylesheet" href="./file scc/salespage- modify.css">
+    <link rel="stylesheet" href="./file scc/salespage-modify.css"> <!-- Hoặc CSS chung của bạn -->
 </head>
 <body>
-    <div class="salespage">
-        <h1> Đăng tin bán xe</h1>
-        <form id="carForm">
-            <div class="form-group">
-                <label for="brand">Hãng xe:</label>
-                <input type="text" id="brand" name="brand" required class="input-text-fg">
-            </div>
-            <div class="form-group">
-                <label for="model">Mẫu xe:</label>
-                <input type="text" id="model" name="model" required class="input-text-fg">
-            </div>
-            <div class="form-group">
-                <label for="year">Năm sản xuất:</label>
-                <input type="number" id="year" name="year" required class="input-number-fg">
-            </div>
-            <div class="form-group">
-                <label for="seats">Số chỗ ngồi:</label>
-                <select id="seats" name="seats" required class="input-select-fg">
-                    <option value="">-- Chọn số chỗ --</option>
-                    <option value="2">2 chỗ</option>
-                    <option value="4">4 chỗ</option>
-                    <option value="7">7 chỗ</option>
-                    <option value="8">8 chỗ trở lên</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="color">Màu xe:</label>
-                <input type="text" id="color" name="color" required class="input-text-fg">
-            </div>
-            <div class="form-group">
-                <label for="mileage">Đã chạy (km):</label>
-                <input type="number" id="mileage" name="mileage" required class="input-number-fg">
-            </div>
-            <div class="form-group">
-                <label for="price">Giá bán (VNĐ):</label>
-                <input type="number" id="price" name="price" required class="input-number-fg">
-            </div>
-            <div class="form-group">
-                <label for="imageUpload">Hình ảnh:</label>
-                <input type="file" id="imageUpload" name="imageUpload" accept="image/*" multiple>
-                <div id="imagePreviewContainer" style="display: flex; flex-wrap: wrap; margin-top: 10px;">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="condition">Tình trạng xe:</label>
-                <select id="condition" name="condition" required>
-                    <option value="">-- Chọn tình trạng --</option>
-                    <option value="new">Xe mới</option>
-                    <option value="used">Xe cũ</option>
-                </select>
-            </div>
-            <div id="usedCarDetails" style="display: none;">
-                <div class="form-group">
-                    <label for="registrationPaper">Giấy tờ đăng ký xe:</label>
-                    <select id="registrationPaper" name="registrationPaper">
-                        <option value="">-- Chọn tình trạng --</option>
-                        <option value="yes">Đầy đủ, hợp lệ</option>
-                        <option value="no">Không đầy đủ/hết hạn</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="inspectionExpiry">Thời hạn đăng kiểm:</label>
-                    <input type="date" id="inspectionExpiry" name="inspectionExpiry">
-                </div>
-                <div class="form-group">
-                    <label for="insuranceExpiry">Bảo hiểm xe:</label>
-                    <input type="date" id="insuranceExpiry" name="insuranceExpiry">
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="accident">Tình trạng tai nạn:</label>
-                <select id="accident" name="accident" required>
-                    <option value="">-- Chọn tình trạng --</option>
-                    <option value="no">Chưa từng bị tai nạn</option>
-                    <option value="yes">Đã từng bị tai nạn (mô tả chi tiết nếu có)</option>
-                </select>
-                <textarea id="accidentDetails" name="accidentDetails" placeholder="Mô tả chi tiết về tai nạn (nếu có)" style="width: calc(100% - 12px); padding: 8px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; margin-top: 5px; display: none;"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="paymentMethods">Hình thức thanh toán:</label>
-                <select id="paymentMethods" name="paymentMethods" required class="input-select-fg">
-                    <option value="">-- Chọn hình thức --</option>
-                    <option value="cash">Tiền mặt</option>
-                    <option value="transfer">Chuyển khoản</option>
-                    <option value="installment">Trả góp</option>
-                    <option value="other">Tất cả phương thức trên</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="deliveryTime">Thời gian giao xe dự kiến:</label>
-                <input type="text" id="deliveryTime" name="deliveryTime" class="input-text-fg">
-            </div>
-            <div class="form-group">
-                <label for="viewingLocation">Địa điểm xem xe:</label>
-                <input type="text" id="viewingLocation" name="viewingLocation" required class="input-text-fg">
-            </div>
+    <div class="salespage-container"> <!-- Optional wrapper for consistent padding -->
+        <div class="salespage">
+            <h1 id="pageTitle">Đăng tin bán xe</h1>
+            <form id="carForm">
+                <h2>Thông Tin Cơ Bản Về Xe</h2>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="brand">Hãng xe:<span class="required-asterisk">*</span></label>
+                        <input type="text" id="brand" name="brand" required class="input-text-fg">
+                    </div>
+                    <div class="form-group">
+                        <label for="model">Mẫu xe:<span class="required-asterisk">*</span></label>
+                        <input type="text" id="model" name="model" required class="input-text-fg">
+                    </div>
+                    <div class="form-group">
+                        <label for="year">Năm sản xuất:<span class="required-asterisk">*</span></label>
+                        <input type="number" id="year" name="year" required class="input-number-fg" min="1900" max="2099">
+                    </div>
+                    <div class="form-group">
+                        <label for="seats">Số chỗ ngồi:<span class="required-asterisk">*</span></label>
+                        <select id="seats" name="seats" required class="input-select-fg">
+                            <option value="">-- Chọn số chỗ --</option>
+                            <option value="2">2 chỗ</option>
+                            <option value="4">4 chỗ</option>
+                            <option value="5">5 chỗ</option>
+                            <option value="7">7 chỗ</option>
+                            <option value="8+">8 chỗ trở lên</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="color">Màu xe:<span class="required-asterisk">*</span></label>
+                        <input type="text" id="color" name="color" required class="input-text-fg">
+                    </div>
+                    <div class="form-group">
+                        <label for="mileage">Đã chạy (km):<span class="required-asterisk">*</span></label>
+                        <input type="number" id="mileage" name="mileage" required class="input-number-fg" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="price">Giá bán (VNĐ):<span class="required-asterisk">*</span></label>
+                        <input type="number" id="price" name="price" required class="input-number-fg" min="0">
+                    </div>
 
-            <h2>Thông Tin Người Bán</h2>
-            <div class="form-group">
-                <label for="sellerName">Họ và tên (Cá nhân/Đại lý):</label>
-                <input type="text" id="sellerName" name="sellerName" required class="input-text-fg">
-            </div>
-            <div class="form-group">
-                <label for="sellerPhone">Số điện thoại:</label>
-                <input type="tel" id="sellerPhone" name="sellerPhone" required>
-            </div>
-            <div class="form-group">
-                <label for="sellerAddress">Địa chỉ liên hệ (Nơi sống):</label>
-                <input type="text" id="sellerAddress" name="sellerAddress" required class="input-text-fg">
-            </div>
-            <div class="form-group">
-                <label for="sellerEmail">Địa chỉ email:</label>
-                <input type="email" id="sellerEmail" name="sellerEmail" required class="input-text-fg">
-            </div>
+                    <!-- **** TRƯỜNG CHỌN TRẠNG THÁI XE **** -->
+                    <div class="form-group">
+                        <label for="carStatus">Trạng thái xe:<span class="required-asterisk">*</span></label>
+                        <select id="carStatus" name="carStatus" required class="input-select-fg">
+                            <option value="available">Còn xe</option>
+                            <option value="pending">Đang giao dịch</option>
+                            <option value="sold">Đã bán</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="carStatus">Trạng thái xe:<span class="required-asterisk">*</span></label>
+                        <select id="carStatus" name="carStatus" required class="input-select-fg">
+                        <option value="available">Còn xe</option>
+                        <option value="pending">Đang giao dịch</option>
+                        <option value="sold">Đã bán</option>
+                        </select>
+                    </div>
+                </div>
 
-            <button type="submit" class="submit-button">Đăng Tin</button>
-        </form>
+                <h2>Hình Ảnh Xe</h2>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="imageUpload">Tải lên hình ảnh (tối đa 10 ảnh, ảnh đầu tiên sẽ là ảnh đại diện):<span class="required-asterisk">*</span></label>
+                        <input type="file" id="imageUpload" name="imageUpload" accept="image/*" multiple>
+                        <div id="imagePreviewContainer"></div>
+                    </div>
+                </div>
+
+                <h2>Tình Trạng Xe & Giấy Tờ</h2>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="condition">Tình trạng xe:<span class="required-asterisk">*</span></label>
+                        <select id="condition" name="condition" required class="input-select-fg">
+                            <option value="">-- Chọn tình trạng --</option>
+                            <option value="new">Xe mới</option>
+                            <option value="used">Xe cũ (Đã qua sử dụng)</option>
+                        </select>
+                    </div>
+                    <div id="usedCarDetails" style="display: none;">
+                        <div class="form-group">
+                            <label for="registrationPaper">Giấy tờ đăng ký xe:</label>
+                            <select id="registrationPaper" name="registrationPaper" class="input-select-fg">
+                                <option value="">-- Chọn tình trạng giấy tờ --</option>
+                                <option value="yes">Đầy đủ, hợp lệ</option>
+                                <option value="no">Không đầy đủ/chưa hợp lệ</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="inspectionExpiry">Thời hạn đăng kiểm (nếu có):</label>
+                            <input type="date" id="inspectionExpiry" name="inspectionExpiry" class="input-date-fg">
+                        </div>
+                        <div class="form-group">
+                            <label for="insuranceExpiry">Bảo hiểm xe (nếu có):</label>
+                            <input type="date" id="insuranceExpiry" name="insuranceExpiry" class="input-date-fg">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="accident">Tình trạng tai nạn:<span class="required-asterisk">*</span></label>
+                        <select id="accident" name="accident" required class="input-select-fg">
+                            <option value="">-- Chọn tình trạng --</option>
+                            <option value="no">Chưa từng bị tai nạn/sửa chữa lớn</option>
+                            <option value="yes">Đã từng bị tai nạn/sửa chữa lớn</option>
+                        </select>
+                        <textarea id="accidentDetails" name="accidentDetails" placeholder="Mô tả chi tiết về tai nạn hoặc các hạng mục đã sửa chữa lớn (nếu có)" class="input-textarea-fg" style="display: none;"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="additionalInfo">Mô tả thêm về xe:</label>
+                        <textarea id="additionalInfo" name="additionalInfo" placeholder="Ví dụ: Xe gia đình sử dụng, còn mới, bảo dưỡng định kỳ, các trang bị thêm..." class="input-textarea-fg"></textarea>
+                    </div>
+                </div>
+
+                <h2>Thông Tin Giao Dịch</h2>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="paymentMethods">Hình thức thanh toán ưu tiên:<span class="required-asterisk">*</span></label>
+                        <select id="paymentMethods" name="paymentMethods" required class="input-select-fg">
+                            <option value="">-- Chọn hình thức --</option>
+                            <option value="cash">Tiền mặt</option>
+                            <option value="transfer">Chuyển khoản</option>
+                            <option value="installment">Hỗ trợ trả góp (thỏa thuận)</option>
+                            <option value="all">Tất cả các phương thức trên</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="deliveryTime">Thời gian giao xe dự kiến:</label>
+                        <input type="text" id="deliveryTime" name="deliveryTime" placeholder="Ví dụ: Ngay sau khi hoàn tất giao dịch" class="input-text-fg">
+                    </div>
+                    <div class="form-group">
+                        <label for="viewingLocation">Địa điểm xem xe:<span class="required-asterisk">*</span></label>
+                        <input type="text" id="viewingLocation" name="viewingLocation" required placeholder="Ví dụ: Quận Ba Đình, Hà Nội" class="input-text-fg">
+                    </div>
+                </div>
+
+                <h2>Thông Tin Liên Hệ Người Bán</h2>
+                <div class="form-section">
+                    <div class="form-group">
+                        <label for="sellerName">Họ và tên (Cá nhân/Tên cửa hàng):<span class="required-asterisk">*</span></label>
+                        <input type="text" id="sellerName" name="sellerName" required class="input-text-fg">
+                    </div>
+                    <div class="form-group">
+                        <label for="sellerPhone">Số điện thoại liên hệ:<span class="required-asterisk">*</span></label>
+                        <input type="tel" id="sellerPhone" name="sellerPhone" required class="input-tel-fg" pattern="[0-9]{10,11}" title="Số điện thoại gồm 10-11 chữ số">
+                    </div>
+                    <div class="form-group">
+                        <label for="sellerAddress">Địa chỉ liên hệ (Quận/Huyện, Tỉnh/Thành phố):<span class="required-asterisk">*</span></label>
+                        <input type="text" id="sellerAddress" name="sellerAddress" required class="input-text-fg">
+                    </div>
+                    <div class="form-group">
+                        <label for="sellerEmail">Địa chỉ email:</label>
+                        <input type="email" id="sellerEmail" name="sellerEmail" class="input-email-fg">
+                    </div>
+                </div>
+                <input type="hidden" id="editingCarId" name="editingCarId">
+                <button type="submit" class="submit-button" id="submitButton">Đăng Tin</button>
+            </form>
+        </div>
     </div>
-
     <script src="./file js/salespage.js"></script>
 </body>
 </html>
