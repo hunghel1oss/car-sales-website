@@ -5,14 +5,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chi Tiết Xe</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link rel="stylesheet" href="./file scc/premium-unified.css"> 
+    <!-- <link rel="stylesheet" href="./file scc/premium-unified.css">  Xóa hoặc đảm bảo nó không xung đột -->
     <link rel="stylesheet" href="./file scc/car-details.css">
 </head>
 <body>
     <main class="card-details-page-container">
         <div class="card-details-container">
             <div class="back-link-container">
-                <a href="3.html" class="back-link">« Quay lại trang danh sách xe</a>
+                <a href="3.html" class="back-link"><i class='bx bx-arrow-back'></i> Quay lại danh sách</a>
                 <div class="action-buttons-header">
                     <button id="saveAdButton" class="action-button secondary save-button">
                         <i class='bx bx-heart'></i>
@@ -34,122 +34,135 @@
                 </div>
             </div>
 
-            <section class="car-info-basic">
-                <h2>Thông Tin Cơ Bản</h2>
-                <div class="detail-group">
-                    <span class="detail-label">Hãng xe:</span> <span id="brand" class="detail-value"></span>
-                </div>
-                <div class="detail-group">
-                    <span class="detail-label">Mẫu xe:</span> <span id="model" class="detail-value"></span>
-                </div>
-                <div class="detail-group">
-                    <span class="detail-label">Năm sản xuất:</span> <span id="year" class="detail-value"></span>
-                </div>
-                <div class="detail-group">
-                    <span class="detail-label">Số chỗ ngồi:</span> <span id="seats" class="detail-value"></span>
-                </div>
-                <div class="detail-group">
-                    <span class="detail-label">Màu xe:</span> <span id="color" class="detail-value"></span>
-                </div>
-                <div class="detail-group">
-                    <span class="detail-label">Đã chạy (Odo):</span> <span id="mileage" class="detail-value"></span>
-                </div>
-                <div class="detail-group">
-                    <span class="detail-label">Giá bán:</span> <span id="price" class="detail-value price-highlight"></span>
-                </div>
-            </section>
-            <section class="car-images">
-                 <h2>Hình Ảnh Xe</h2>
-                <div class="detail-group">
-                    <div id="imagePreviewContainer" class="image-gallery">
-                    </div>
-                </div>
-            </section>
+            <div class="details-grid-layout">
+    
+                <div class="grid-column column-main-info">
+                    <section class="car-info-basic">
+                        <h2>Thông Tin Cơ Bản</h2>
+                        <div class="detail-group">
+                            <span class="detail-label">Hãng xe:</span> <span id="brand" class="detail-value"></span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Mẫu xe:</span> <span id="model" class="detail-value"></span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Năm sản xuất:</span> <span id="year" class="detail-value"></span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Số chỗ ngồi:</span> <span id="seats" class="detail-value"></span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Màu xe:</span> <span id="color" class="detail-value"></span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Đã chạy (Odo):</span> <span id="mileage" class="detail-value"></span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Giá bán:</span> <span id="price" class="detail-value price-highlight"></span>
+                        </div>
+                    </section>
 
-            <section class="car-condition-docs">
-                <h2>Tình Trạng & Giấy Tờ</h2>
-                <div class="detail-group">
-                    <span class="detail-label">Tình trạng xe:</span> <span id="condition" class="detail-value"></span>
-                </div>
-                <div id="usedCarSpecificDetails" style="display: none;">
-                    <div class="detail-group">
-                        <span class="detail-label">Giấy tờ đăng ký xe:</span> <span id="registrationPaper" class="detail-value"></span>
-                    </div>
-                    <div class="detail-group">
-                        <span class="detail-label">Thời hạn đăng kiểm:</span> <span id="inspectionExpiry" class="detail-value"></span>
-                    </div>
-                    <div class="detail-group">
-                        <span class="detail-label">Bảo hiểm xe:</span> <span id="insuranceExpiry" class="detail-value"></span>
-                    </div>
-                </div>
-                <div class="detail-group">
-                    <span class="detail-label">Tình trạng tai nạn:</span> <span id="accident" class="detail-value"></span>
-                </div>
-                <div class="detail-group" id="accidentDetailsGroup" style="display:none;">
-                    <span class="detail-label">Chi tiết tai nạn:</span> <span id="accidentDetails" class="detail-value detail-description"></span>
-                </div>
-                 <div class="detail-group">
-                    <span class="detail-label">Mô tả thêm:</span> <span id="additionalInfo" class="detail-value detail-description"></span>
-                </div>
-            </section>
+                    <section class="car-images">
+                        <h2>Hình Ảnh Xe</h2>
+                        <div class="detail-group">
+                            <div id="imagePreviewContainer" class="image-gallery">
+                    
+                            </div>
+                        </div>
+                    </section>
 
-            <section class="car-transaction">
-                 <h2>Thông Tin Giao Dịch</h2>
-                <div class="detail-group">
-                    <span class="detail-label">Hình thức thanh toán:</span> <span id="paymentMethods" class="detail-value"></span>
-                </div>
-                <div class="detail-group">
-                    <span class="detail-label">Thời gian giao xe dự kiến:</span> <span id="deliveryTime" class="detail-value"></span>
-                </div>
-                <div class="detail-group">
-                    <span class="detail-label">Địa điểm xem xe:</span> <span id="viewingLocation" class="detail-value"></span>
-                </div>
-                 <div class="detail-group">
-                    <span class="detail-label">Ngày đăng:</span> <span id="postedDate" class="detail-value"></span>
-                </div>
-            </section>
+                    <section class="car-condition-docs">
+                        <h2>Tình Trạng & Giấy Tờ</h2>
+                        <div class="detail-group">
+                            <span class="detail-label">Tình trạng xe:</span> <span id="condition" class="detail-value"></span>
+                        </div>
+                        <div id="usedCarSpecificDetails" style="display: none;">
+                            <div class="detail-group">
+                                <span class="detail-label">Giấy tờ đăng ký xe:</span> <span id="registrationPaper" class="detail-value"></span>
+                            </div>
+                            <div class="detail-group">
+                                <span class="detail-label">Thời hạn đăng kiểm:</span> <span id="inspectionExpiry" class="detail-value"></span>
+                            </div>
+                            <div class="detail-group">
+                                <span class="detail-label">Bảo hiểm xe:</span> <span id="insuranceExpiry" class="detail-value"></span>
+                            </div>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Tình trạng tai nạn:</span> <span id="accident" class="detail-value"></span>
+                        </div>
+                        <div class="detail-group" id="accidentDetailsGroup" style="display:none;">
+                            <span class="detail-label">Chi tiết tai nạn/sửa chữa:</span> <span id="accidentDetails" class="detail-value detail-description"></span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Mô tả thêm:</span> <span id="additionalInfo" class="detail-value detail-description"></span>
+                        </div>
+                    </section>
 
-            <section class="seller-info">
-                <h2>Thông Tin Người Bán</h2>
-                <div class="detail-group">
-                    <span class="detail-label">Họ và tên:</span> <span id="sellerName" class="detail-value"></span>
+                    <section class="car-transaction">
+                        <h2>Thông Tin Giao Dịch</h2>
+                       <div class="detail-group">
+                           <span class="detail-label">Hình thức thanh toán:</span> <span id="paymentMethods" class="detail-value"></span>
+                       </div>
+                       <div class="detail-group">
+                           <span class="detail-label">Thời gian giao xe dự kiến:</span> <span id="deliveryTime" class="detail-value"></span>
+                       </div>
+                       <div class="detail-group">
+                           <span class="detail-label">Địa điểm xem xe:</span> <span id="viewingLocation" class="detail-value"></span>
+                       </div>
+                        <div class="detail-group">
+                           <span class="detail-label">Ngày đăng:</span> <span id="postedDate" class="detail-value"></span>
+                       </div>
+                   </section>
                 </div>
-                <div class="detail-group">
-                    <span class="detail-label">Số điện thoại:</span>
-                    <a id="sellerPhoneLink" href="#" style="text-decoration: none;">
-                         <span id="sellerPhone" class="detail-value contact-info"></span>
-                     </a>
-                </div>
-                <div class="detail-group">
-                    <span class="detail-label">Địa chỉ liên hệ:</span> <span id="sellerAddress" class="detail-value"></span>
-                </div>
-                <div class="detail-group">
-                    <span class="detail-label">Địa chỉ email:</span>
-                    <a id="sellerEmailLink" href="#" style="text-decoration: none;">
-                         <span id="sellerEmail" class="detail-value contact-info"></span>
-                     </a>
-                </div>
-            </section>
 
-            <section class="car-comments-section">
-                <h2>Bình Luận Về Xe (<span id="commentCount">0</span>)</h2>
-                <div class="comment-form-container">
-                    <h3>Để lại bình luận của bạn</h3>
-                    <form id="commentForm">
-                        <textarea id="commentText" name="commentText" placeholder="Viết bình luận của bạn ở đây..." required rows="4"></textarea>
-                        <button type="submit" class="action-button primary">Gửi Bình Luận</button>
-                    </form>
-                    <p id="commentLoginPrompt" style="display:none; margin-top:10px;">
-                        Vui lòng <a href="login.html" class="text-link">đăng nhập</a> để bình luận.
-                    </p>
+                <div class="grid-column column-seller-comments">
+                    <section class="seller-info">
+                        <h2>Thông Tin Người Bán</h2>
+                        <div class="detail-group">
+                            <span class="detail-label">Họ và tên:</span> <span id="sellerName" class="detail-value"></span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Số điện thoại:</span>
+                            <a id="sellerPhoneLink" href="#" class="contact-link">
+                                 <i class='bx bxs-phone-call'></i> <span id="sellerPhone" class="detail-value contact-info"></span>
+                             </a>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Địa chỉ liên hệ:</span> <span id="sellerAddress" class="detail-value"></span>
+                        </div>
+                        <div class="detail-group">
+                            <span class="detail-label">Địa chỉ email:</span>
+                            <a id="sellerEmailLink" href="#" class="contact-link">
+                                 <i class='bx bxs-envelope'></i> <span id="sellerEmail" class="detail-value contact-info"></span>
+                             </a>
+                        </div>
+                    </section>
+
+                    <section class="car-comments-section">
+                        <h2>Bình Luận (<span id="commentCount">0</span>)</h2>
+                        <div class="comment-form-container">
+                            <h3>Để lại bình luận của bạn</h3>
+                            <form id="commentForm">
+                                <textarea id="commentText" name="commentText" placeholder="Chia sẻ cảm nghĩ hoặc câu hỏi của bạn về chiếc xe này..." required rows="4"></textarea>
+                                <button type="submit" class="action-button primary submit-comment-btn">
+                                    <i class='bx bxs-paper-plane'></i> Gửi Bình Luận
+                                </button>
+                            </form>
+                            <p id="commentLoginPrompt" style="display:none; margin-top:15px;">
+                                Vui lòng <a href="login.html" class="text-link">đăng nhập</a> để bình luận.
+                            </p>
+                        </div>
+                        <div class="comments-list-container">
+                            <h3>Các bình luận trước</h3>
+                            <div id="commentsList">
+                                <p class="no-comments" style="display:none;">Chưa có bình luận nào. Hãy là người đầu tiên!</p>
+                        
+                            </div>
+                        </div>
+                    </section>
                 </div>
-                <div class="comments-list-container">
-                    <h3>Các bình luận trước</h3>
-                    <div id="commentsList">
-                        <p class="no-comments" style="display:none;">Chưa có bình luận nào cho xe này. Hãy là người đầu tiên!</p>
-                    </div>
-                </div>
-            </section>
+            </div> 
+
         </div>
     </main>
 

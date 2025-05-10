@@ -37,7 +37,7 @@ html::-webkit-scrollbar-thumb { border-radius: 5rem; background: var(--text-colo
 
 body {
     color: var(--text-color);
-    background-image: url('./file ảnh/anh-nen-sieu-xe-001\ \(1\).jpg');
+    background-image: url('./file ảnh/Mazda\ CX-8.jpg');
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
@@ -78,7 +78,7 @@ section#home.default-view-section {
 section#home::before {
     content: '';
     position: absolute;
-    top: 0; left: 0; right: 0;  height: 650px;;
+    top: 0; left: 0; right: 0;  height: 650px;
     background: rgba(0,0,0, 0.4);
     z-index: 1;
 }
